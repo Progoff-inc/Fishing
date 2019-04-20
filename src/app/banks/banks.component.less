@@ -1,0 +1,35 @@
+@import "../../colors.less";
+
+.banks{
+    .bank{
+        display: flex;;
+        flex-direction: column;
+        align-items: center;
+        width: 200px;
+        padding: 10px;
+        img{
+            width: 100%;
+        }
+    }
+    .new-bank{
+        display: flex;
+        align-items: center;
+        i{
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-color: @blue;
+            border-radius: 50%;
+            font-size: 35px;
+            cursor: pointer;
+
+            &.invalid-add{
+                background-color: rgb(70, 114, 172) !important;
+                cursor: default;
+            }
+        }
+    }
+}

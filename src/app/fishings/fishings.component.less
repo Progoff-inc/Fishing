@@ -1,0 +1,75 @@
+@import "../../colors.less";
+
+.new-fishing{
+    display: flex;
+    width: 100%;
+}
+
+.fishing{
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    margin-bottom: 10px;
+    .main{
+        display: flex;
+        justify-content: space-between;
+        .item{
+            h4{
+                font-weight: 400;
+                font-size: 18px;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .banks{
+        .new-bank{
+            display: flex;
+            align-items: center;
+            i{
+                height: 50px;
+                width: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                background-color: @blue;
+                border-radius: 50%;
+                font-size: 35px;
+                cursor: pointer;
+
+                &.invalid-add{
+                    background-color: rgb(70, 114, 172) !important;
+                    cursor: default;
+                }
+            }
+        }
+    }
+    
+}
+
+.line {
+    margin-top: 30px;
+    font-size: 12pt;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.line span {
+    background-color: #ffffff;
+    position: relative;
+    z-index: 1;
+    padding: 0px 8px;
+    cursor: pointer;
+    color: rgb(138, 138, 138);
+}
+.line:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: rgb(185, 192, 194);
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    z-index: 0;
+}

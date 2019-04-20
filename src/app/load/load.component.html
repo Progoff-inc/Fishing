@@ -1,0 +1,4 @@
+<div *ngIf="service.showLoad" class="load">
+    <i class="fas fa-spinner fa-spin fa-lg"></i>
+    <span *ngIf="service.load>-1">{{service.load}}%</span>
+</div>

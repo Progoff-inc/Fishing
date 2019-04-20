@@ -1,0 +1,8 @@
+<div class="form-group">
+  <label>Выберите банку</label>
+  <select class="form-control" #bank>
+    <option value="{{b}}" *ngFor="let b of fs.banks">{{b.Name}}</option>
+  </select>
+  
+</div>
+<button class="btn btn-primary" (click)="add(bank)">Добавить</button>

@@ -1,0 +1,42 @@
+@import "../../colors.less";
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    .item{
+        
+        padding: 20px;
+        &:first-child{
+            padding-left: 0 !important;
+        }
+        cursor: pointer;
+        &:hover, &.active{
+            h3{
+                color: @blue;
+                &::after{
+                    width: 100%;
+                    background-color: @blue;
+                }
+            }
+        }
+        
+        h3{
+            font-size: 15px;
+            text-transform: uppercase;
+            transition: 0.5s;
+            font-weight: 400;
+            position: relative;
+            text-shadow: 0 0 0 black;
+            &::after{
+                content: '';
+                display: block;
+                width: 0;
+                height: 2px;
+                transition: 0.5s;
+                background-color:#000;
+                position: absolute;
+                bottom: -1px;
+            }
+        }
+    }
+}

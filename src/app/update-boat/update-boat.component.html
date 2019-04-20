@@ -1,0 +1,27 @@
+<form [formGroup]="boatForm" (ngSubmit)="save()">
+    <h3 class="text-center" style="font-weight:400" >Добавление судна</h3>
+    <div class="form-group">
+      <label for="na" [ngClass]="{'text-danger':(f.Name.errors)}">Название судна</label>
+      <input [ngClass]="{'border-danger':(f.Name.errors)}" formControlName="Name" class="form-control" id="na" placeholder="Название судна">
+      <small  class="form-text text-danger" *ngIf="f.Name.errors && f.Name.errors.required">Введите название судна</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputType1" [ngClass]="{'text-danger':(f.Type.errors)}">Тип судна</label>
+        <select [ngClass]="{'border-danger':(f.Type.errors)}" class="form-control" formControlName="Type" >
+          <option value="{{t}}" *ngFor="let t of types">{{t}}</option>
+        </select>
+        <small  class="form-text text-danger" *ngIf="f.Type.errors && f.Type.errors.required">Укажите тип судна</small>
+    </div>
+    <div class="form-group">
+        <label [ngClass]="{'text-danger':(f.Displacement.errors)}" for="DES">Водоизмещение судна</label>
+        <input [ngClass]="{'border-danger':(f.Displacement.errors)}" type="number" formControlName="Displacement" class="form-control" id="DES" placeholder="Водоизмещение судна">
+        <small  class="form-text text-danger" *ngIf="f.Displacement.errors && f.Displacement.errors.required">Введите водоизмещение судна</small>
+    </div>
+    <div class="form-group">
+        <label [ngClass]="{'text-danger':(f.BuildDate.errors)}" for="D">Дата создания судна</label>
+        <input [ngClass]="{'border-danger':(f.BuildDate.errors)}" formControlName="BuildDate" type="date" class="form-control" id="D" placeholder="Дата создания судна">
+        <small  class="form-text text-danger" *ngIf="f.BuildDate.errors && f.BuildDate.errors.required">Укажите дату создания судна</small>
+    </div>
+    <button *ngIf="formChanged" type="submit" class="btn btn-primary" >Сохранить</button>
+  </form>
+  

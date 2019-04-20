@@ -1,0 +1,10 @@
+<div class="form">
+  <h2>Добавление</h2>
+  <div class="form-group">
+      <label  [ngClass]="{'text-danger':(submitted && bank.value=='')}">Название банки</label>
+      <input class="form-control" type="text" #bank>
+      <small  class="form-text text-danger" *ngIf="submitted && bank.value==''">Введите название банки</small>
+  </div>
+  
+  <button class="btn btn-primary" (click)="add(bank.value)">Добавить</button>
+</div>

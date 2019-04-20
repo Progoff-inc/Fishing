@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Банки</h2>
+  <div class="banks flex-container">
+    <div class="bank" *ngFor="let b of fs.banks">
+      <img src="../../assets/images/bank.png">
+      <h4>{{b.Name}}</h4>
+      <small>{{b.Quality}}</small>
+    </div>
+    <div class="new-bank">
+      <i class="fas fa-plus" aria-hidden="true"  (click)="ms.open('add-bank', fs.banks)"></i>
+    </div>
+  </div>
+</div>
