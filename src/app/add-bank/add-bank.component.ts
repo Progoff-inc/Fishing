@@ -9,18 +9,20 @@ import { ModalService } from '../services/modal.service';
   styleUrls: ['./add-bank.component.less']
 })
 export class AddBankComponent implements OnInit {
+  @Input() banks:Bank[];
   submitted = false;
   constructor(public fs:FishingService, private ms:ModalService) { }
-  @Input() banks:Bank[];
+  
   ngOnInit() {
   }
 
   add(n){
     this.submitted = true;
+    console.log(n);
     if(n == ''){
       return;
     }
-    this.banks.push({BankId:0, Name:n});
+    this.banks.push({BankId:this.fs.banks.length, Name:n});
     this.fs.save();
     this.ms.close();
   }

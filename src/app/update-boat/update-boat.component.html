@@ -1,5 +1,5 @@
 <form [formGroup]="boatForm" (ngSubmit)="save()">
-    <h3 class="text-center" style="font-weight:400" >Добавление судна</h3>
+    <h3 class="text-center" style="font-weight:400" >Изменение судна</h3>
     <div class="form-group">
       <label for="na" [ngClass]="{'text-danger':(f.Name.errors)}">Название судна</label>
       <input [ngClass]="{'border-danger':(f.Name.errors)}" formControlName="Name" class="form-control" id="na" placeholder="Название судна">

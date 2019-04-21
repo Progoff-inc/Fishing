@@ -1,19 +1,19 @@
 <div class="container">
   <h2>Рейсы</h2>
-  <div class="filters" *ngIf="fishings">
-    <div class="filter">
+  <div class="filters flex-container" *ngIf="fs.fishings.length>0">
+    <div class="filter form-group">
       <h4>Тип судна</h4>
-      <select [ngModel]="filters.Type">
+      <select class="form-control" [ngModel]="filters.Type">
         <option value="{{t}}" *ngFor="let t of types">{{t}}</option>
       </select>
     </div>
-    <div class="filter">
+    <div class="filter form-group">
       <h4>Дата начала</h4>
-      <input [ngModel]="filters.DateSatrt" type="date">
+      <input class="form-control" [ngModel]="filters.DateSatrt" type="date">
     </div>
-    <div class="filter">
+    <div class="filter form-group">
       <h4>Дата конца</h4>
-      <input [ngModel]="filters.DateFinish" type="date">
+      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
     </div>
   </div>
   <div class="fishings">
@@ -32,18 +32,48 @@
           <small>{{f.DateFinish | date:"dd.MM.yyyy"}}</small>
         </div>
       </div>
-      <p class="line" ><span >Подробнее <i class="fa" [ngClass] = "{'fa-angle-down':true, ' fa-angle-up':false}"></i></span></p>
-      <h4>Банки</h4>
-      <div class="banks flex-container">
-        <div class="bank" *ngFor="let b of f.banks">
-          <img src="../../assets/images/bank.png">
-          <h4>{{b.Name}}</h4>
-          <small>{{b.Quality}}</small>
+      <p class="line" ><span (click)="show(f)">Подробнее <i class="fa" [ngClass] = "{'fa-angle-down':!f.Show, ' fa-angle-up':f.Show}"></i></span></p>
+      <div *ngIf="f.Show">
+        <h4>Банки</h4>
+        <div class="banks flex-container">
+          <div class="bank" *ngFor="let b of f.Banks">
+            <img src="../../assets/images/bank.png">
+            <h4>{{b.Bank.Name}}</h4>
+            <small>{{b.Quality}}</small>
+            <div class="bank-catch">
+              <span *ngFor="let c of b.Catches">{{c.FishType}} - {{c.Weight}}</span>
+            </div>
+          </div>
+          <div class="new-bank">
+            <i class="fas fa-plus" aria-hidden="true" [ngClass]="{'invalid-add':fs.banks.length==0}" (click)="fs.banks.length==0?'':ms.open('add-fishing-bank',f)"></i>
+          </div>
         </div>
-        <div class="new-bank">
-          <i class="fas fa-plus" aria-hidden="true" [ngClass]="{'invalid-add':fs.banks.length==0}" (click)="fs.banks.length==0?'':ms.open('add-fishing-bank',f)"></i>
+        <h4>Улов</h4>
+        <div class="catches flex-container">
+          <div class="catch"  *ngFor="let c of getCatch(f.Banks); let i = index">
+          
+            <div class="form-group">
+              <label>Тип рыбы</label>
+              <span class="form-control">{{c.FishType}}</span>
+            </div>
+            <div class="form-group">
+              <label>Вес улова</label>
+              <span class="form-control">{{c.Weight}}</span>
+            </div>
+          </div>
+        </div>
+
+        <h4>Команда</h4>
+        <div class="flex-container">
+          <div class="sailor"  *ngFor="let c of f.Sailors; let i = index">
+            <h4>{{c.Surname}} {{c.Name}}</h4>
+            <small>{{c.Position}}</small>
+            <p>{{c.Address}}</p>
+          </div>
         </div>
       </div>
+      
+      
     </div>
     <div class="new-fishing">
       <button class="btn btn-success" (click)="ms.open('add-fishing',fs.fishings)" [disabled]="fs.boats.length == 0">Добавить рейс</button>

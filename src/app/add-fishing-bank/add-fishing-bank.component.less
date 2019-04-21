@@ -1,0 +1,69 @@
+@import "../../colors.less";
+
+.new-bank{
+    display: flex;
+    align-items: center;
+    i{
+        height: 50px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background-color: @blue;
+        border-radius: 50%;
+        font-size: 35px;
+        cursor: pointer;
+
+        &.invalid-add{
+            background-color: rgb(70, 114, 172) !important;
+            cursor: default;
+        }
+    }
+}
+
+.catches{
+    margin: 20px 0;
+    .catch{
+        min-width: 200px;
+        border: 1px solid lightgray;
+        padding: 10px;
+        border-radius: 5px;
+        position: relative;
+        overflow: hidden;
+        select{
+            display: none;
+        }
+        &.active{
+            .remove{
+                display: none !important;
+            }
+            span.form-control{
+                display: none;
+            }
+            select{
+                display: block !important;
+            }
+        }
+        &:hover{
+            .remove{
+                top:0;
+                right:0;
+            }
+        }
+        .remove{
+            border-radius: 50%;
+            display: block;
+            height: 30px;
+            width: 30px;
+            color: blue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: -30px;
+            top: -30px;
+            transition: 0.3s;
+        }
+    }
+}

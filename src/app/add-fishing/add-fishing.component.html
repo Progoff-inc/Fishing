@@ -2,11 +2,11 @@
 <form [formGroup]="fishingForm" (ngSubmit)="add()">
     <h3 class="text-center" style="font-weight:400" >Добавление рейса</h3>
     <div class="form-group">
-        <label for="exampleInputBoat1" [ngClass]="{'text-danger':(submitted && f.Boat.errors)}">Тип судна</label>
-        <select [ngClass]="{'border-danger':(submitted && f.Boat.errors)}" class="form-control" formControlName="Boat" >
-          <option value="{{b}}" *ngFor="let b of fs.boats">{{b.Name}}</option>
+        <label for="exampleInputBoatId1" [ngClass]="{'text-danger':(submitted && f.BoatId.errors)}">Тип судна</label>
+        <select [ngClass]="{'border-danger':(submitted && f.BoatId.errors)}" class="form-control" formControlName="BoatId" >
+          <option value="{{b.BoatId}}" *ngFor="let b of fs.boats">{{b.Name}}</option>
         </select>
-        <small  class="form-text text-danger" *ngIf="submitted && f.Boat.errors && f.Boat.errors.required">Укажите судно</small>
+        <small  class="form-text text-danger" *ngIf="submitted && f.BoatId.errors && f.BoatId.errors.required">Укажите судно</small>
     </div>
     <div class="form-group">
         <label [ngClass]="{'text-danger':(submitted && f.DateStart.errors)}" for="D">Дата начала</label>
@@ -17,6 +17,38 @@
         <label [ngClass]="{'text-danger':(submitted && f.DateFinish.errors)}" for="D1">Дата конца</label>
         <input [ngClass]="{'border-danger':(submitted && f.DateFinish.errors)}" formControlName="DateFinish" type="date" class="form-control" id="D1">
         <small  class="form-text text-danger" *ngIf="submitted && f.DateFinish.errors && f.DateFinish.errors.required">Введите дату окончания рейса</small>
+    </div>
+    <h3>Команда</h3>
+    <div class="catches flex-container">
+        <div class="catch" [ngClass]="{'active':i==sailors.length-1}" *ngFor="let c of sailors; let i = index">
+            <span class="remove" (click)="remove(i)"><i class="fas fa-times" aria-hidden="true"></i></span>
+            <div class="form-group">
+                <label [ngClass]="{'text-danger':(csubmitted && c.Name == '')}">Имя</label>
+                <input class="form-control" [(ngModel)]="c.Name" [ngModelOptions]="{standalone: true}" type="text" [disabled]="i!=sailors.length-1">
+                <small  class="form-text text-danger" *ngIf="csubmitted && c.Name == ''">Укажите имя члена экипажа</small>
+            </div>
+            <div class="form-group">
+                <label [ngClass]="{'text-danger':(csubmitted && c.Surname == '')}">Фамилия</label>
+                <input class="form-control" [(ngModel)]="c.Surname" [ngModelOptions]="{standalone: true}" type="text" [disabled]="i!=sailors.length-1">
+                <small  class="form-text text-danger" *ngIf="csubmitted && c.Surname == ''">Укажите фамилию члена экипажа</small>
+            </div>
+            <div class="form-group">
+                <label [ngClass]="{'text-danger':(csubmitted && c.Address == '')}">Адрес</label>
+                <input class="form-control" [(ngModel)]="c.Address" [ngModelOptions]="{standalone: true}" type="text" [disabled]="i!=sailors.length-1">
+                <small  class="form-text text-danger" *ngIf="csubmitted && c.Address == ''">Укажите адрес члена экипажа</small>
+            </div>
+            <div class="form-group">
+                <label [ngClass]="{'text-danger':(csubmitted && !c.Position)}">Должность</label>
+                <span class="form-control">{{c.Position}}</span>
+                <select [(ngModel)]="c.Position" [ngModelOptions]="{standalone: true}" class="form-control" #type>
+                    <option value="{{f}}" *ngFor="let f of Positions">{{f}}</option>
+                </select>
+                <small  class="form-text text-danger" *ngIf="csubmitted && !c.Position">Укажите должность члена экипажа</small>
+            </div>
+        </div>
+        <div class="new-bank">
+            <i class="fas fa-plus" aria-hidden="true"  (click)="addSailor()"></i>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary" >Добавить</button>
   </form>

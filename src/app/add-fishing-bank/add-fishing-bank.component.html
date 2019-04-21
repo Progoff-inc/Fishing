@@ -1,8 +1,55 @@
-<div class="form-group">
-  <label>Выберите банку</label>
-  <select class="form-control" #bank>
-    <option value="{{b}}" *ngFor="let b of fs.banks">{{b.Name}}</option>
-  </select>
+
+
+<form [formGroup]="bankForm" (ngSubmit)="add()">
+  <h3 class="text-center" style="font-weight:400" >Добавление банки рейса</h3>
   
-</div>
-<button class="btn btn-primary" (click)="add(bank)">Добавить</button>
+  <div class="form-group">
+    <label [ngClass]="{'text-danger':(submitted && f.BankId.errors)}">Банка</label>
+    <select formControlName="BankId" class="form-control" #bank>
+      <option value="{{b.BankId}}" *ngFor="let b of fs.banks" >{{b.Name}}</option>
+    </select>
+    <small  class="form-text text-danger" *ngIf="submitted && f.BankId.errors">Укажите банку</small>
+  </div>
+  <div class="form-group">
+    <label [ngClass]="{'text-danger':(submitted && f.Quality.errors)}">Качество улова</label>
+    <select formControlName="Quality" class="form-control" >
+      <option value="{{q}}" *ngFor="let q of Quality" >{{q}}</option>
+    </select>
+    <small  class="form-text text-danger" *ngIf="submitted && f.Quality.errors">Укажите качество улова</small>
+  </div>
+  <div class="form-group">
+      <label [ngClass]="{'text-danger':(submitted && f.DateStart.errors)}" for="D">Дата начала</label>
+      <input [ngClass]="{'border-danger':(submitted && f.DateStart.errors)}" formControlName="DateStart" type="date" class="form-control" id="D" >
+      <small  class="form-text text-danger" *ngIf="submitted && f.DateStart.errors && f.DateStart.errors.required">Введите дату начала рейса</small>
+  </div>
+  <div class="form-group">
+      <label [ngClass]="{'text-danger':(submitted && f.DateFinish.errors)}" for="D1">Дата конца</label>
+      <input [ngClass]="{'border-danger':(submitted && f.DateFinish.errors)}" formControlName="DateFinish" type="date" class="form-control" id="D1">
+      <small  class="form-text text-danger" *ngIf="submitted && f.DateFinish.errors && f.DateFinish.errors.required">Введите дату окончания рейса</small>
+  </div>
+  <h3>Улов</h3>
+  <div class="catches flex-container">
+    <div class="catch" [ngClass]="{'active':i==catches.length-1}" *ngFor="let c of catches; let i = index">
+      <span class="remove" (click)="remove(i)"><i class="fas fa-times" aria-hidden="true"></i></span>
+      <div class="form-group">
+        <label [ngClass]="{'text-danger':(csubmitted && !c.FishType)}">Тип рыбы</label>
+        <span class="form-control">{{c.FishType}}</span>
+        <select [(ngModel)]="c.FishType" [ngModelOptions]="{standalone: true}" class="form-control" #type>
+          <option value="{{f}}" *ngFor="let f of Fish">{{f}}</option>
+        </select>
+        <small  class="form-text text-danger" *ngIf="csubmitted && !c.FishType">Укажите тип рыбы</small>
+      </div>
+      <div class="form-group">
+        <label [ngClass]="{'text-danger':(csubmitted && c.Weight == 0)}">Вес улова</label>
+        <input class="form-control" [(ngModel)]="c.Weight" [ngModelOptions]="{standalone: true}" type="number" #catch>
+        <small  class="form-text text-danger" *ngIf="csubmitted && c.Weight == 0">Укажите вес улова</small>
+      </div>
+    </div>
+    <div class="new-bank">
+      <i class="fas fa-plus" aria-hidden="true"  (click)="addCatch()"></i>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" >Добавить</button>
+</form>
+
+

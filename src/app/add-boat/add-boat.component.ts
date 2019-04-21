@@ -20,6 +20,7 @@ export class AddBoatComponent implements OnInit {
 
   ngOnInit() {
     this.boatForm = this.fb.group({
+      BoatId:[this.fs.boats.length],
       Name: ['', Validators.required],
       Type: ['', [Validators.required]],
       Displacement: ['', [Validators.required]],

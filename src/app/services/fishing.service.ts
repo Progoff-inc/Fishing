@@ -7,6 +7,9 @@ export class FishingService{
     fishings:Fishing[] = [];
 
     constructor(){
+        // localStorage.removeItem('boats');
+        // localStorage.removeItem('banks');
+        // localStorage.removeItem('fishings');
         this.boats = this.getBoats();
         this.fishings = this.getFishings();
         this.banks = this.getBanks();
@@ -39,4 +42,6 @@ export class FishingService{
         localStorage.setItem('banks', JSON.stringify(this.banks));
         localStorage.setItem('fishings', JSON.stringify(this.fishings));
     }
+
+    
 }
