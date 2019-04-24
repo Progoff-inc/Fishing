@@ -1,0 +1,30 @@
+@import "../fishings/fishings.component.less";
+@import "../bank-boats/bank-boats.component.less";
+@import "../../colors.less";
+
+
+.bank::before{
+    max-height: 85px;
+}
+.black{
+    h4, h5{
+        color: black !important;
+    }
+    .bank, .boat{
+        h4, h5{
+            color: black !important;
+        }
+        
+        small{
+            color: rgb(138, 138, 138) !important;
+        }
+        
+    }
+}
+
+
+.boat{
+    &::after{
+        background-color: @blue !important;
+    }
+}

@@ -10,4 +10,18 @@
       <i class="fas fa-plus" aria-hidden="true"  (click)="ms.open('add-bank', fs.banks)"></i>
     </div>
   </div>
+  <h2>Средний улов по банкам</h2>
+  <div class="filters flex-container" *ngIf="fs.banks.length>0">
+    <div class="filter form-group">
+      <h4>Дата начала</h4>
+      <input class="form-control" [ngModel]="filters.DateStart" type="date">
+    </div>
+    <div class="filter form-group">
+      <h4>Дата конца</h4>
+      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
+    </div>
+  </div>
+  
+  <bank-boats></bank-boats>
+
 </div>

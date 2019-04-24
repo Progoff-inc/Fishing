@@ -14,20 +14,40 @@
     </div>
   </div>
   <h2>Рейсы катеров</h2>
-  <div class="filters" *ngIf="fishings">
-    <div class="filter">
+  <div class="filters flex-container" *ngIf="fs.fishings.length>0">
+    <div class="filter form-group">
       <h4>Тип судна</h4>
-      <select [ngModel]="filters.Type">
+      <select class="form-control" [ngModel]="filters.Type">
         <option value="{{t}}" *ngFor="let t of types">{{t}}</option>
       </select>
     </div>
-    <div class="filter">
+    <div class="filter form-group">
       <h4>Дата начала</h4>
-      <input [ngModel]="filters.DateSatrt" type="date">
+      <input class="form-control" [ngModel]="filters.DateSatrt" type="date">
     </div>
-    <div class="filter">
+    <div class="filter form-group">
       <h4>Дата конца</h4>
-      <input [ngModel]="filters.DateFinish" type="date">
+      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
+    </div>
+  </div>
+  <div>
+    <div class="boat" *ngFor="let b of boats">
+      <div class="info">
+        <h4>{{b.Name}}</h4>
+        <small>{{b.Type}}</small>
+      </div>
+      <table class="fishing-table">
+        <thead class="fishing">
+          <td class="cell">Дата начала</td>
+          <td class="cell">Дата конца</td>
+          <td class="cell">Улов</td>
+        </thead>
+        <tr class="fishing" *ngFor="let f of b.Fishings">
+          <td class="cell">{{f.DateStart | date:"dd.MM.yyyy"}}</td>
+          <td class="cell">{{f.DateFinish | date:"dd.MM.yyyy"}}</td>
+          <td class="cell">{{f.Catch}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>

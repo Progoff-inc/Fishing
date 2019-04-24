@@ -27,6 +27,8 @@ import { AddFishingComponent } from './add-fishing/add-fishing.component';
 import { AddFishingBankComponent } from './add-fishing-bank/add-fishing-bank.component';
 import { AddBankComponent } from './add-bank/add-bank.component';
 import { BanksComponent } from './banks/banks.component';
+import { BankBoatsComponent } from './bank-boats/bank-boats.component';
+import { CatchComponent } from './catch/catch.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { BanksComponent } from './banks/banks.component';
     AddFishingComponent,
     AddFishingBankComponent,
     AddBankComponent,
-    BanksComponent
+    BanksComponent,
+    BankBoatsComponent,
+    CatchComponent
   ],
   imports: [
     BrowserModule,

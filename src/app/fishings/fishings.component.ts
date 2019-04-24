@@ -69,4 +69,5 @@ export class FishingsComponent implements OnInit {
   
     return Object.keys(obj); // или собрать ключи перебором для IE8-
   }
+  
 }

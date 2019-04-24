@@ -1,0 +1,88 @@
+@import "../../colors.less";
+
+.bank{
+    padding: 5px 10px;
+    position: relative;
+    cursor: pointer;
+    small, h4, select{
+        z-index: 10;
+        position: relative;
+        transition: 0.5s;
+    }
+    small{
+        color: rgb(138, 138, 138);
+    }
+    h4{
+        margin-bottom: 0;
+        font-weight: 400;
+    }
+
+    &::after{
+        display: block;
+        content: '';
+        width: 100%;
+        max-width: 5px;
+        height: 100%;
+        position: absolute;
+        transition: 0.5s;
+        top: 0;
+        left: 0;
+        background-color: @blue;
+    }
+    &::before{
+        display: block;
+        content: '';
+        width: 100%;
+        max-width: 5px;
+        height: 100%;
+        position: absolute;
+        transition: 0.5s;
+        top: 0;
+        left: 0;
+        background-color: @light-blue;
+    }
+    .boat::after{
+        content: '';
+        display: block;
+        height: 30px;
+        width: 30px;
+        background-color: @blue;
+        border-radius: 50%;
+        position: absolute;
+        left: -15px;
+        top: -15px;
+    }
+
+    &:hover{
+        &:before{
+            max-width: 1000px;
+        }
+        h4, small, h5, div, .boat h5{
+            color: white;
+            &:after{
+                background-color: #fff;
+            }
+        }
+        
+    } 
+}
+
+.boat{
+    z-index: 10;
+    border: 1px solid lightgray;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 70px;
+    small{
+        display: block;
+        &:nth-child(3){
+            margin-top: 8px;
+        }
+    }
+    h4, h5{
+        margin-bottom: 0;
+        font-weight: 400;
+    }
+}

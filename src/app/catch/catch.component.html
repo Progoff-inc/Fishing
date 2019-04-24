@@ -1,0 +1,59 @@
+<div class="container">
+  <h2>Улов рыбы по сортам</h2>
+  <div class="filters flex-container" *ngIf="fishes.length>0">
+    <div class="filter form-group">
+      <h4>Дата начала</h4>
+      <input class="form-control" [ngModel]="filters.DateSatrt" type="date">
+    </div>
+    <div class="filter form-group">
+      <h4>Дата конца</h4>
+      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
+    </div>
+  </div>
+  <div class="flex-container my-4">
+    <div class="bank" *ngFor="let f of fishes" [ngClass]="{'w-100':f.Show}" (click)="show(f, $event)">
+      <h4>{{f.Name}}</h4>
+      <small>Сорт рыбы</small>
+      <div class="black">
+          <h4 class="my-4" *ngIf="f.Show">Рейсы</h4>
+      </div>
+      
+      <div class="flex-container black" *ngIf="f.Show">
+        <div class="boat" *ngFor="let fishing of f.Fishings">
+          <h5>{{fishing.BoatName}}</h5>
+          <small>{{fishing.DateStart | date:"dd.MM.yyyy"}} - {{fishing.DateFinish | date:"dd.MM.yyyy"}}</small>
+          <small>Улов: {{fishing.Catch}}</small>
+        </div>
+      </div>
+      <div class="black">
+          <h4 class="my-4" *ngIf="f.Show">Наибольший улов</h4>
+      </div>
+      
+      <div class="flex-container black" *ngIf="f.Show">
+        <div class="boat" *ngFor="let mb of maxBoats">
+          <h5>{{mb.Name}}</h5>
+          <small>Улов: {{mb.Catch}}</small>
+        </div>
+      </div>
+      <div class="black">
+          <h4 class="my-4"  *ngIf="f.Show">Улов по банке</h4>
+      </div>
+      
+      <div class="form-group black mb-3" *ngIf="f.Show ">
+        <h5 style="font-weight: 400;">Банка </h5>
+        <select class="form-control">
+          <option value="{{b.BankId}}" *ngFor="let b of getBanks(f)" style="color:black">{{b.Name}}</option>
+        </select>
+      </div>
+      <div class="flex-container black" *ngIf="f.Show ">
+        <div class="boat" *ngFor="let fishing of bankFishings">
+          <h5>{{fishing.BoatName}}</h5>
+          <small>{{fishing.DateStart | date:"dd.MM.yyyy"}} - {{fishing.DateFinish | date:"dd.MM.yyyy"}}</small>
+          <small>Улов: {{fishing.Catch}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
