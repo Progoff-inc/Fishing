@@ -9,21 +9,52 @@ if(isset($_GET['Key']))
 {
     
     switch ($_GET['Key']) {
-        case 'get-clients':
-            echo json_encode($ctxt->getClients());
+        case 'get-banks':
+            echo json_encode($ctxt->getBanks());
             break;
-        case 'get-team':
-            echo json_encode($ctxt->getTeam());
+        case 'get-boats':
+            echo json_encode($ctxt->getBoats());
             break;
-        case 'get-jobs':
-            echo json_encode($ctxt->getJobs());
+        case 'get-boats-fishings':
+            echo json_encode($ctxt->getBoatsFishings($_GET['Type'], $_GET['DateStart'], $_GET['DateFinish']));
             break;
-        case 'add-app':
+        case 'get-fishings':
+            echo json_encode($ctxt->getFishings($_GET['DateStart'], $_GET['DateFinish']));
+            break;
+        case 'get-max-catch-fidhings':
+            echo json_encode($ctxt->getMaxCatchBoats($_GET['DateStart'], $_GET['DateFinish']));
+            break;
+        case 'get-banks-avg-catch':
+            echo json_encode($ctxt->getBanksAvgCatch($_GET['DateStart'], $_GET['DateFinish']));
+            break;
+        case 'get-bank-boats-above-avg':
+            echo json_encode($ctxt->getBankBoatsAboveAvg($_GET['Id']));
+            break;
+        case 'get-fish':
+            echo json_encode($ctxt->getFish($_GET['DateStart'], $_GET['DateFinish']));
+            break;
+        case 'get-bank-fish-fishings':
+            echo json_encode($ctxt->getBankFishFishings($_GET['Id'], $_GET['FishType']));
+            break;
+        case 'add-boat':
             $b = json_decode(file_get_contents('php://input'), true);
-            echo json_encode($ctxt->addApp($b['App'], $b['Attachment']));
+            echo json_encode($ctxt->addBoat($b));
             break;
-        case 'get-sales':
-            echo json_encode($ctxt->getSales());
+        case 'add-fishing':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->addFishing($b));
+            break;
+        case 'add-fishing-bank':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->addFishingBank($b));
+            break;
+        case 'add-bank':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->addBank($b));
+            break;
+        case 'update-boat':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->updateBoat($_GET['Id'], $b));
             break;
         // case 'upload-file':
         //     $inp = json_decode(file_get_contents('php://input'), true);

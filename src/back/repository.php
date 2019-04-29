@@ -6,8 +6,8 @@ class DataBase {
     public function __construct()
     {
         //$this->db = new PDO('mysql:host=localhost;dbname=myblog;charset=UTF8','nlc','12345');
-        $this->db = new PDO('mysql:host=localhost;dbname=nomokoiw_poff;charset=UTF8','nomokoiw_poff','ms87%L39');
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        //$this->db = new PDO('mysql:host=localhost;dbname=nomokoiw_poff;charset=UTF8','nomokoiw_poff','ms87%L39');
+        //$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
     public function uploadFile($pid, $files, $t){
@@ -85,52 +85,70 @@ class DataBase {
         
     }
     
-    public function getClients(){
-        $sth = $this->db->query("SELECT * FROM clients");
-        $sth->setFetchMode(PDO::FETCH_CLASS, 'Client');
-        return $sth->fetchAll();
+    public function getBanks(){
+        // $sth = $this->db->query("SELECT * FROM banks");
+        // $sth->setFetchMode(PDO::FETCH_CLASS, 'Bank');
+        // return $sth->fetchAll();
+        return array();
     }
 
-    public function getTeam(){
-        $sth = $this->db->query("SELECT * FROM mates");
-        $sth->setFetchMode(PDO::FETCH_CLASS, 'Mate');
-        return $sth->fetchAll();
+    public function getBoats(){
+        // $sth = $this->db->query("SELECT * FROM boats");
+        // $sth->setFetchMode(PDO::FETCH_CLASS, 'Boat');
+        // return $sth->fetchAll();
+        return array();
     }
 
-    public function getSales(){
-        $sth = $this->db->query("SELECT * FROM sales");
-        $sth->setFetchMode(PDO::FETCH_CLASS, 'Sale');
-        $sales = [];
-        while ($s = $sth->fetch()) {
-            $s->Services = $this->getSaleServs($s->Id);
-            $sales[] = $s;
-        }
-        return $sales;
+    public function getBoatsFishings($t, $ds, $df){
+        return array();
+        // $sth = $this->db->query("SELECT * FROM sales");
+        // $sth->setFetchMode(PDO::FETCH_CLASS, 'Sale');
+        // $sales = [];
+        // while ($s = $sth->fetch()) {
+        //     $s->Services = $this->getSaleServs($s->Id);
+        //     $sales[] = $s;
+        // }
+        // return $sales;
     }
 
-    public function getJobs(){
-        $sth = $this->db->query("SELECT * FROM jobs");
-        $sth->setFetchMode(PDO::FETCH_CLASS, 'Job');
-        $jobs = [];
-        while ($j = $sth->fetch()) {
-            $j->Requirements = $this->getJobReqs($j->Id);
-            $jobs[] = $j;
-        }
-        return $jobs;
+    public function getFishings($ds, $df){
+        return array();
     }
     
-    private function getSaleServs($sid){
-        $s = $this->db->prepare("SELECT ser.Id as Id, ser.Name as Name, ser.Description as Description, ser.Price as Price from (sales sale RIGHT join saleservice ss ON sale.Id = ss.SaleId) LEFT JOIN services ser ON ser.Id = ss.ServiceId WHERE sale.Id=?");
-        $s->execute(array($sid));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Service');
-        return $s->fetchAll();
+    public function getMaxCatchBoats($ds, $df){
+        return array();
     }
 
-    private function getJobReqs($jid){
-        $s = $this->db->prepare("SELECT req.Id as Id, req.Description as Description from (jobs job RIGHT join jobrequirement jr ON job.Id = jr.JobId) LEFT JOIN requirements req ON req.Id = jr.RequirementId WHERE job.Id=?");
-        $s->execute(array($jid));
-        $s->setFetchMode(PDO::FETCH_CLASS, 'Requirement');
-        return $s->fetchAll();
+    public function getBankBoatsAboveAvg($bid){
+        return array();
+    }
+
+    public function getFish($ds, $df){
+        return array();
+    }
+
+    public function getBankFishFishings($bid, $df){
+        return array();
+    }
+
+    public function addBoat($boat){
+        return 1;
+    }
+
+    public function addFishing($fishing){
+        return 1;
+    }
+
+    public function addFishingBank($bank){
+        return 1;
+    }
+
+    public function addBank($bank){
+        return 1;
+    }
+
+    public function updateBoat($boat){
+        return 1;
     }
 
     public function addApp($app, $attachment){
