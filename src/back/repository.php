@@ -119,6 +119,9 @@ class DataBase {
         return array();
     }
 
+    public function getBanksAvgCatch($ds, $df){
+        return array();
+    }
     public function getBankBoatsAboveAvg($bid){
         return array();
     }

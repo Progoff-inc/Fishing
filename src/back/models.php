@@ -1,48 +1,48 @@
 <?php
 class Boat{
-    $BoatId;
-    $Name;
-    $Type;
-    $Displacement;
-    $BuildDate;
+    public $BoatId;
+    public $Name;
+    public $Type;
+    public $Displacement;
+    public $BuildDate;
 }
 
 class Bank{
-    $BankId;
-    $Name;
+    public $BankId;
+    public $Name;
 }
 
 class Fishing{
-    $FishingId
-    $BoatId;
-    $DateStart;
-    $DateFinish;
+    public $FishingId;
+    public $BoatId;
+    public $DateStart;
+    public $DateFinish;
 
-    $Boat;
-    $Banks;
-    $Sailors;
+    public $Boat;
+    public $Banks;
+    public $Sailors;
 }
 
 class FishingBank{
-    $Bank;
-    $DateStart;
-    $DateFinish;
-    $Quality;
+    public $Bank;
+    public $DateStart;
+    public $DateFinish;
+    public $Quality;
 
-    $Catches;
+    public $Catches;
 }
 
-class Catch{
-    $FishType;
-    $Weight;
+class FishCatch{
+    public $FishType;
+    public $Weight;
 }
 
 class Sailor{
-    $SalorId;
-    $Name;
-    $Surname;
-    $Address;
-    $Position;
+    public $SalorId;
+    public $Name;
+    public $Surname;
+    public $Address;
+    public $Position;
 }
 
 ?>

@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Рейсы</h2>
-  <div class="filters flex-container" *ngIf="fishings.length>0">
+  <div class="filters flex-container" *ngIf="fishings && fishings.length>0">
     <div class="filter form-group">
       <h4>Дата начала</h4>
       <input class="form-control" [ngModel]="filters.DateSatrt" type="date">
