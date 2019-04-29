@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Boat, Fishing, BoatTypes } from '../services/models';
 import { ModalService } from '../services/modal.service';
 import { FishingService } from '../services/fishing.service';
+import { LoadService } from '../services/load.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class HomeComponent implements OnInit {
   filters:any;
   boats = []
 
-  constructor(public ms:ModalService, public fs:FishingService) { }
+  constructor(public ms:ModalService, public fs:FishingService, private ls:LoadService) { }
 
   ngOnInit() {
     let d = new Date();
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   getBoats(){
     this.fs.getBoats(this.filters.Type, this.filters.DateStart, this.filters.DateFinish).subscribe(boats => {
       this.boats = boats;
+      this.ls.showLoad=false;
     })
   }
 

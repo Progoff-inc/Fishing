@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS sailors (
     Name varchar(255) NOT NULL,
     Address varchar(255) NOT NULL,
 
-    CONSTRAINT fsf_fk FOREIGN KEY(FishingId) REFERENCES fishings(FishingId)
+    CONSTRAINT fsf_fk FOREIGN KEY(FishingId) REFERENCES fishings(FishingId) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS fishingbanks (

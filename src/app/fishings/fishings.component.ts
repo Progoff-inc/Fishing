@@ -24,6 +24,7 @@ export class FishingsComponent implements OnInit {
 
   getFishings(){
     this.fs.getFishings(this.filters.DateStart, this.filters.DateFinish).subscribe(fishings => {
+      console.log(fishings);
       this.fishings = fishings;
       this.fishings.forEach(f => {
         f['Show']=false;

@@ -19,7 +19,7 @@ export class AddFishingComponent implements OnInit {
   constructor(private fb:FormBuilder, private ms:ModalService, public fs:FishingService) { }
 
   ngOnInit() {
-    console.log(this.fs.boats);
+    console.log(this.fishings);
     if(this.fs.boats.length==0){
       this.ms.close();
     }
@@ -39,12 +39,12 @@ export class AddFishingComponent implements OnInit {
     let boat = this.fs.boats.find(x => x.BoatId == this.fishingForm.value.BoatId);
     let fishing = {
       BoatId:boat.BoatId,
-      Boat:boat,
       DateStart:this.fishingForm.value.DateStart,
       DateFinish:this.fishingForm.value.DateFinish,
       Sailors:this.sailors
     }
     this.fs.addFishing(fishing).subscribe(fid => {
+      console.log(fid);
       this.fishings.push({
         FishingId:fid,
         BoatId:boat.BoatId,

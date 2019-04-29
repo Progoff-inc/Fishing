@@ -8,7 +8,8 @@ import { Changes } from "../update-boat/update-boat.component";
 export class FishingService{
     boats:Boat[] = [];
     banks:Bank[] = [];
-    baseUrl:string='http://localhost/fishing/';
+    baseUrl:string='http://client.nomokoiw.beget.tech/fishing/';
+    
 
     constructor(private http: HttpClient, private ls:LoadService){
         this.getBoats();
@@ -50,7 +51,7 @@ export class FishingService{
      * Получение списка рейсов
      */
     getFishings(dateStart:Date, dateFinish:Date){
-        const params = new HttpParams().set('DateStart', dateStart.toDateString()).set('DateFinish', dateFinish.toDateString());
+        const params = new HttpParams().set('DateStart', dateStart.toISOString()).set('DateFinish', dateFinish.toISOString());
         return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-fishings', {params})
     }
 
