@@ -8,7 +8,7 @@ import { Changes } from "../update-boat/update-boat.component";
 export class FishingService{
     boats:Boat[] = [];
     banks:Bank[] = [];
-    baseUrl:string='http://client.nomokoiw.beget.tech/fishing/';
+    baseUrl:string='http://localhost:8080/box/';
 
     constructor(private http: HttpClient, private ls:LoadService){
         this.getBoats();
