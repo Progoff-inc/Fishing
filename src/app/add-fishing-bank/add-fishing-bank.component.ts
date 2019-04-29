@@ -43,9 +43,11 @@ export class AddFishingBankComponent implements OnInit {
 
       Catches:this.catches
     }
-    this.fishing.Banks.push(bank);
-    this.fs.save();
-    this.ms.close();
+    this.fs.addFishingBank(bank, this.fishing.FishingId).subscribe(()=>{
+      this.fishing.Banks.push(bank);
+      this.ms.close();
+    })
+    
   }
 
   addCatch(){

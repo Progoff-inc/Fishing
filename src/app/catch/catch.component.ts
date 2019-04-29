@@ -8,10 +8,7 @@ import { FishingService } from '../services/fishing.service';
   styleUrls: ['./catch.component.less']
 })
 export class CatchComponent implements OnInit {
-  filters = {
-    DateStart:this.DateStart,
-    DateFinish:new Date(new Date().toDateString())
-  }
+  filters:any;
   fishes = [
     {
       Name: FishTypes.Cod,
@@ -63,13 +60,24 @@ export class CatchComponent implements OnInit {
   constructor(public fs:FishingService) { }
 
   ngOnInit() {
-    console.log(this.fishes);
+    let d = new Date();
+    this.filters = {DateStart:new Date(d.getFullYear(), d.getMonth(), 1), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1)}
+    this.getFish();
   }
 
-  get DateStart() {
-    let date = new Date(new Date().toDateString());
-    date.setMonth(date.getMonth()-1);
-    return date;
+  getFish(){
+    this.fs.getFish(this.filters.DateStart, this.filters.DateFinish).subscribe(fishes => {
+      this.fishes = fishes;
+      this.fishes.forEach(f => {
+        f['BankId'] = this.getBanks()[0].BankId;
+        this.fs.getMaxCatchBoats(f.Name, this.filters.DateStart, this.filters.DateFinish).subscribe(boats=>{
+          f['MaxBoats']=boats;
+        })
+        this.fs.getBankFishFishings(f.Name, f['BankId']).subscribe(fishings => {
+          f['BankFishings']=fishings;
+        })
+      })
+    })
   }
 
   show(b, e){
@@ -79,7 +87,7 @@ export class CatchComponent implements OnInit {
     
   }
 
-  getBanks(f){
+  getBanks(f=null){
     
     return this.fs.banks;
   }

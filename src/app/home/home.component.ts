@@ -10,69 +10,25 @@ import { FishingService } from '../services/fishing.service';
 })
 export class HomeComponent implements OnInit {
 
-  filters = {
-    Type:this.types.length>0?this.types[0]:'',
-    DateStart:this.DateStart,
-    DateFinish:new Date(new Date().toDateString())
-  }
-  boats = [
-    {
-      Name: "Адмирал",
-      Type: BoatTypes.Seiner,
-      Fishings: [
-        {
-          DateStart: new Date(),
-          DateFinish: new Date(),
-          Catch: 100.23
-        },
-        {
-          DateStart: new Date(),
-          DateFinish: new Date(),
-          Catch: 100.23
-        },
-        {
-          DateStart: new Date(),
-          DateFinish: new Date(),
-          Catch: 100.23
-        },
-        {
-          DateStart: new Date(),
-          DateFinish: new Date(),
-          Catch: 100.23
-        },
-        {
-          DateStart: new Date(),
-          DateFinish: new Date(),
-          Catch: 100.23
-        }
-
-      ]
-    },
-    {
-      Name: "Ласточка",
-      Type: BoatTypes.SwimmingBase,
-      Fishings: [
-        {
-          DateStart: new Date(),
-          DateFinish: new Date(),
-          Catch: 1000.23
-        }
-      ]
-    }
-  ]
+  filters:any;
+  boats = []
 
   constructor(public ms:ModalService, public fs:FishingService) { }
 
   ngOnInit() {
+    let d = new Date();
+    this.filters = {Type:this.types.length>0?this.types[0]:'', DateStart:new Date(d.getFullYear(), d.getMonth(), 1), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1)}
+    this.getBoats();
+  }
+
+  getBoats(){
+    this.fs.getBoats(this.filters.Type, this.filters.DateStart, this.filters.DateFinish).subscribe(boats => {
+      this.boats = boats;
+    })
   }
 
 
-  get types(){ return this.fs.fishings? this.unique(this.fs.fishings.map(x => x.Boat.Type)):[]};
-  get DateStart() {
-    let date = new Date(new Date().toDateString());
-    date.setMonth(date.getMonth()-1);
-    return date;
-  }
+  get types(){ return [BoatTypes.Drifter, BoatTypes.Seiner, BoatTypes.SwimmingBase, BoatTypes.Trawler]};
 
 
   unique(arr) {

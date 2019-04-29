@@ -18,7 +18,7 @@
           <h4 class="my-4" *ngIf="f.Show">Рейсы</h4>
       </div>
       
-      <div class="flex-container black" *ngIf="f.Show">
+      <div *ngIf="f.Fishings" class="flex-container black" *ngIf="f.Show">
         <div class="boat" *ngFor="let fishing of f.Fishings">
           <h5>{{fishing.BoatName}}</h5>
           <small>{{fishing.DateStart | date:"dd.MM.yyyy"}} - {{fishing.DateFinish | date:"dd.MM.yyyy"}}</small>
@@ -29,8 +29,8 @@
           <h4 class="my-4" *ngIf="f.Show">Наибольший улов</h4>
       </div>
       
-      <div class="flex-container black" *ngIf="f.Show">
-        <div class="boat" *ngFor="let mb of maxBoats">
+      <div *ngIf="f.MaxBoats" class="flex-container black" *ngIf="f.Show">
+        <div class="boat" *ngFor="let mb of f.MaxBoats">
           <h5>{{mb.Name}}</h5>
           <small>Улов: {{mb.Catch}}</small>
         </div>
@@ -45,8 +45,8 @@
           <option value="{{b.BankId}}" *ngFor="let b of getBanks(f)" style="color:black">{{b.Name}}</option>
         </select>
       </div>
-      <div class="flex-container black" *ngIf="f.Show ">
-        <div class="boat" *ngFor="let fishing of bankFishings">
+      <div *ngIf="f.BankFishings" class="flex-container black" *ngIf="f.Show ">
+        <div class="boat" *ngFor="let fishing of f.BankFishings">
           <h5>{{fishing.BoatName}}</h5>
           <small>{{fishing.DateStart | date:"dd.MM.yyyy"}} - {{fishing.DateFinish | date:"dd.MM.yyyy"}}</small>
           <small>Улов: {{fishing.Catch}}</small>

@@ -1,7 +1,7 @@
 
 <div class="container">
   <h2>Катера</h2>
-  <div class="flex-container">
+  <div *ngIf="fs.boats" class="flex-container">
     <div class="ship" *ngFor="let b of fs.boats">
       <h3>{{b.Name}}</h3>
       <small>{{b.Type}}</small>
@@ -14,7 +14,7 @@
     </div>
   </div>
   <h2>Рейсы катеров</h2>
-  <div class="filters flex-container" *ngIf="fs.fishings.length>0">
+  <div class="filters flex-container" *ngIf="boats.length>0">
     <div class="filter form-group">
       <h4>Тип судна</h4>
       <select class="form-control" [ngModel]="filters.Type">

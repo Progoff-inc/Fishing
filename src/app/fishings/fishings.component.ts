@@ -10,18 +10,24 @@ import { ModalService } from '../services/modal.service';
 })
 export class FishingsComponent implements OnInit {
   filters = {
-    Type:this.types.length>0?this.types[0]:'',
     DateStart:this.DateStart,
     DateFinish:new Date(new Date().toDateString())
   }
+  fishings:any;
   constructor(public fs:FishingService, public ms:ModalService) { }
 
   ngOnInit() {
-    this.fs.fishings.forEach(x => {
-      if(!x.Banks){
-        x.Banks = [];
-      }
-      x['Show']=false;
+    let d = new Date();
+    this.filters = {DateStart:new Date(d.getFullYear(), d.getMonth(), 1), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1)}
+    this.getFishings();
+  }
+
+  getFishings(){
+    this.fs.getFishings(this.filters.DateStart, this.filters.DateFinish).subscribe(fishings => {
+      this.fishings = fishings;
+      this.fishings.forEach(f => {
+        f['Show']=false;
+      })
     })
   }
 
@@ -52,7 +58,7 @@ export class FishingsComponent implements OnInit {
 
 
 
-  get types(){ return this.fs.fishings? this.unique(this.fs.fishings.map(x => x.Boat.Type)):[]};
+  get types(){ return this.fishings? this.unique(this.fishings.map(x => x.Boat.Type)):[]};
   get DateStart() {
     let date = new Date(new Date().toDateString());
     date.setMonth(date.getMonth()-1);

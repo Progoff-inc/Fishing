@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Boat, BoatTypes } from '../services/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FishingService } from '../services/fishing.service';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'update-boat',
@@ -13,7 +15,7 @@ export class UpdateBoatComponent implements OnInit {
   boatForm:FormGroup;
   changes:Changes = new Changes;
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fs:FishingService, private ms:ModalService, private fb:FormBuilder) { }
 
   ngOnInit() {
     console.log(this.boat);
@@ -31,7 +33,12 @@ export class UpdateBoatComponent implements OnInit {
     }
     this.checkBoat();
     if(this.changes.Keys.length>0){
-      console.log(this.changes);
+      this.fs.updateBoat(this.changes, this.boat.BoatId).subscribe(()=>{
+        for(let i = 0; i<this.changes.Keys.length; i++){
+          this.boat[this.changes.Keys[i]] = this.changes.Values[i];
+        }
+        this.ms.close();
+      })
     }
 
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoatTypes } from '../services/models';
+import { FishingService } from '../services/fishing.service';
 
 @Component({
   selector: 'bank-boats',
@@ -7,39 +8,29 @@ import { BoatTypes } from '../services/models';
   styleUrls: ['./bank-boats.component.less']
 })
 export class BankBoatsComponent implements OnInit {
-  banks = [
-    {
-      Name: "Архангельское",
-      AvgCatch: 1567.5,
-      Boats: [
-        {Name: "Адмирал", Type: BoatTypes.Seiner},
-        {Name: "Афанасий", Type: BoatTypes.Seiner},
-        {Name: "Урюк", Type: BoatTypes.Seiner},
-        {Name: "Ласточка", Type: BoatTypes.SwimmingBase}
-      ]
-    },
-    {
-      Name: "Архангельское",
-      AvgCatch: 1567.5,
-      Boats: [
-        {Name: "Адмирал", Type: BoatTypes.Seiner},
-        {Name: "Афанасий", Type: BoatTypes.Seiner},
-        {Name: "Урюк", Type: BoatTypes.Seiner},
-        {Name: "Ласточка", Type: BoatTypes.SwimmingBase}
-      ]
-    }
-  ]
-  boats = [
-    {Name: "Адмирал", Catch: 3000.29},
-    {Name: "Афанасий", Catch: 3000.29},
-    {Name: "Урюк", Catch: 3000.29},
-    {Name: "Ласточка", Catch: 3000.29}
-  ]
-  constructor() {
+  banks = []
+  boats = []
+  filters:any;
+  constructor(private fs:FishingService) {
     console.log(this.banks)
    }
 
   ngOnInit() {
+    let d = new Date();
+    this.filters = {DateStart:new Date(d.getFullYear(), d.getMonth(), 1), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1)}
+    this.getBanks();
+    
+  }
+
+  getBanks(){
+    this.fs.getBanksAvgCatch(this.filters.DateStart, this.filters.DateFinish).subscribe(banks => {
+      this.banks = banks;
+      this.banks.forEach(b => {
+        this.fs.getBankBoatsAboveAvg(b.BankId).subscribe(boats => {
+          b['BoatsAvg']=boats;
+        })
+      })
+    })
   }
 
   show(b){

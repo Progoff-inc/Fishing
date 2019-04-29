@@ -20,7 +20,6 @@ export class AddBoatComponent implements OnInit {
 
   ngOnInit() {
     this.boatForm = this.fb.group({
-      BoatId:[this.fs.boats.length],
       Name: ['', Validators.required],
       Type: ['', [Validators.required]],
       Displacement: ['', [Validators.required]],
@@ -33,9 +32,16 @@ export class AddBoatComponent implements OnInit {
     if(this.boatForm.invalid){
       return;
     }
-    this.boats.push(this.boatForm.value);
-    this.fs.save();
-    this.ms.close();
+    this.fs.addBoat(this.boatForm.value).subscribe(bid => {
+      this.boats.push({
+        BoatId:bid, 
+        Name:this.boatForm.value.Name, 
+        Type:this.boatForm.value.Type, 
+        Displacement:this.boatForm.value.Displacement, 
+        BuildDate:this.boatForm.value.BuildDate});
+      this.ms.close();
+    })
+    
   }
 
   get types() { return [BoatTypes.Drifter, BoatTypes.Seiner, BoatTypes.SwimmingBase, BoatTypes.Trawler]};

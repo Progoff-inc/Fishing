@@ -22,9 +22,14 @@ export class AddBankComponent implements OnInit {
     if(n == ''){
       return;
     }
-    this.banks.push({BankId:this.fs.banks.length, Name:n});
-    this.fs.save();
-    this.ms.close();
+    let b = {Name:n};
+    this.fs.addBank(b).subscribe(bid => {
+      this.banks.push({Name:n, BankId:bid});
+      this.ms.close();
+    })
+    
+    
+    
   }
 
 }

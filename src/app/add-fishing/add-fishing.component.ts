@@ -38,18 +38,25 @@ export class AddFishingComponent implements OnInit {
     }
     let boat = this.fs.boats.find(x => x.BoatId == this.fishingForm.value.BoatId);
     let fishing = {
-      FishingId:this.fs.fishings.length,
       BoatId:boat.BoatId,
       Boat:boat,
       DateStart:this.fishingForm.value.DateStart,
       DateFinish:this.fishingForm.value.DateFinish,
-      Banks:[],
       Sailors:this.sailors
     }
-    console.log(fishing);
-    this.fishings.push(fishing);
-    //this.fs.save();
-    this.ms.close();
+    this.fs.addFishing(fishing).subscribe(fid => {
+      this.fishings.push({
+        FishingId:fid,
+        BoatId:boat.BoatId,
+        Boat:boat,
+        DateStart:this.fishingForm.value.DateStart,
+        DateFinish:this.fishingForm.value.DateFinish,
+        Banks:[],
+        Sailors:this.sailors
+      })
+      this.ms.close();
+    })
+    
   }
 
   get DateFinish(){

@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Банки</h2>
-  <div class="banks flex-container">
+  <div *ngIf="fs.banks" class="banks flex-container">
     <div class="bank" *ngFor="let b of fs.banks">
       <img src="../../assets/images/bank.png">
       <h4>{{b.Name}}</h4>
@@ -11,16 +11,7 @@
     </div>
   </div>
   <h2>Средний улов по банкам</h2>
-  <div class="filters flex-container" *ngIf="fs.banks.length>0">
-    <div class="filter form-group">
-      <h4>Дата начала</h4>
-      <input class="form-control" [ngModel]="filters.DateStart" type="date">
-    </div>
-    <div class="filter form-group">
-      <h4>Дата конца</h4>
-      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
-    </div>
-  </div>
+  
   
   <bank-boats></bank-boats>
 

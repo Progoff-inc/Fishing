@@ -1,12 +1,6 @@
 <div class="container">
   <h2>Рейсы</h2>
-  <div class="filters flex-container" *ngIf="fs.fishings.length>0">
-    <div class="filter form-group">
-      <h4>Тип судна</h4>
-      <select class="form-control" [ngModel]="filters.Type">
-        <option value="{{t}}" *ngFor="let t of types">{{t}}</option>
-      </select>
-    </div>
+  <div class="filters flex-container" *ngIf="fishings.length>0">
     <div class="filter form-group">
       <h4>Дата начала</h4>
       <input class="form-control" [ngModel]="filters.DateSatrt" type="date">
@@ -17,7 +11,7 @@
     </div>
   </div>
   <div class="fishings">
-    <div class="fishing" *ngFor="let f of fs.fishings">
+    <div class="fishing" *ngFor="let f of fishings">
       <span class="round"></span>
       <div class="main">
         <div class="item">
