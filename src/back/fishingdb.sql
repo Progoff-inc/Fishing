@@ -11,27 +11,28 @@ CREATE TABLE IF NOT EXISTS banks (
     Name varchar(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS fishings (
-	FishingId int(20) PRIMARY KEY AUTO_INCREMENT,
-    BoatId int(20),
-    DateStart datetime DEFAULT CURRENT_TIMESTAMP,
-    DateFinish datetime,
-    
-    CONSTRAINT fb_fk FOREIGN KEY(BoatId) REFERENCES boats(BoatId)
-);
-
 CREATE TABLE IF NOT EXISTS sailors (
 	SailorId int(20) PRIMARY KEY AUTO_INCREMENT,
-    FishingId int(20),
-    Position varchar(255) NOT NULL,
     Surname varchar(255) NOT NULL,
     Name varchar(255) NOT NULL,
     Address varchar(255) NOT NULL,
+);
 
-    CONSTRAINT fsf_fk FOREIGN KEY(FishingId) REFERENCES fishings(FishingId) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS fishings (
+	FishingId int(20) PRIMARY KEY AUTO_INCREMENT,
+    BoatId int(20),
+    SailorId int(20),
+    Position varchar(255) NOT NULL,
+    DateStart datetime DEFAULT CURRENT_TIMESTAMP,
+    DateFinish datetime,
+    
+    CONSTRAINT fb_fk FOREIGN KEY(BoatId) REFERENCES boats(BoatId),
+    CONSTRAINT fs_fk FOREIGN KEY(SailorId) REFERENCES sailors(SailorId),
+    CONSTRAINT UNIQUE(BoatId, SailorId)
 );
 
 CREATE TABLE IF NOT EXISTS fishingbanks (
+    FishingBankId int(20) PRIMARY KEY AUTO_INCREMENT,
 	FishingId int(20),
     BankId int(20),
     Quality varchar(255) NOT NULL,
@@ -40,16 +41,14 @@ CREATE TABLE IF NOT EXISTS fishingbanks (
     
     CONSTRAINT fbf_fk FOREIGN KEY(FishingId) REFERENCES fishings(FishingId),
     CONSTRAINT fbs_fk FOREIGN KEY(BankId) REFERENCES banks(BankId),
-    CONSTRAINT fb_pk PRIMARY KEY(FishingId, BankId)
+    CONSTRAINT UNIQUE(FishingId, BankId)
 );
 
 CREATE TABLE IF NOT EXISTS fishingbankfish (
-	FishingId int(20),
-    BankId int(20),
+    FishingBankId int(20),
     FishType varchar(255) NOT NULL,
     Weight float(18,2),
     
-    CONSTRAINT ff_fk FOREIGN KEY(FishingId) REFERENCES fishings(FishingId),
-    CONSTRAINT ffb_fk FOREIGN KEY(BankId) REFERENCES banks(BankId),
-    CONSTRAINT ff_pk PRIMARY KEY(FishingId, BankId, FishType)
+    CONSTRAINT ff_fk FOREIGN KEY(FishingBankId) REFERENCES fishingbanks(FishingBankId),
+    CONSTRAINT ff_pk PRIMARY KEY(FishingBankId, FishType)
 );

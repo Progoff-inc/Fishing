@@ -131,8 +131,8 @@ export class FishingService{
      * @param bank банка, которую посетило судно
      * @param fishingId идентификатор рейса
      */
-    addFishingBank(bank:FishingBank, fishingId){
-        return this.http.post<any>(this.baseUrl + 'FishingController.php?Key=add-fishing-bank&Id='+fishingId, bank);
+    addFishingBank(bank){
+        return this.http.post<any>(this.baseUrl + 'FishingController.php?Key=add-fishing-bank', bank);
     }
 
     /**

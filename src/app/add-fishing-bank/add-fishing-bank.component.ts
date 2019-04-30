@@ -35,16 +35,24 @@ export class AddFishingBankComponent implements OnInit {
       return
     }
     let b = this.fs.banks.find(x => x.BankId == Number(this.bankForm.value.BankId));
-    let bank:FishingBank = {
-      Bank:b,
+    let bank = {
+      BankId:b.BankId,
+      FishingId:this.fishing.FishingId,
       DateStart:this.bankForm.value.DateStart,
       DateFinish:this.bankForm.value.DateFinish,
       Quality:this.bankForm.value.Quality,
 
       Catches:this.catches
     }
-    this.fs.addFishingBank(bank, this.fishing.FishingId).subscribe(()=>{
-      this.fishing.Banks.push(bank);
+    this.fs.addFishingBank(bank).subscribe(()=>{
+      this.fishing.Banks.push({
+        Bank:b,
+        DateStart:this.bankForm.value.DateStart,
+        DateFinish:this.bankForm.value.DateFinish,
+        Quality:this.bankForm.value.Quality,
+  
+        Catches:this.catches
+      });
       this.ms.close();
     })
     
