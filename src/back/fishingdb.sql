@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS fishings (
     
     CONSTRAINT fb_fk FOREIGN KEY(BoatId) REFERENCES boats(BoatId),
     CONSTRAINT fs_fk FOREIGN KEY(SailorId) REFERENCES sailors(SailorId),
-    CONSTRAINT UNIQUE(BoatId, SailorId)
+    CONSTRAINT UNIQUE(BoatId, SailorId, DateStart)
 );
 
 CREATE TABLE IF NOT EXISTS fishingbanks (
