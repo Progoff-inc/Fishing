@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>Моряки</h2>
+  <form class="form-inline">
+    <div class="form-group mr-sm-3 mb-2 ">
+      <input type="password" class="form-control" id="inputPassword2" placeholder="Поиск">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Найти</button>
+    <button class="btn btn-link mb-2" (click)="ms.open('add-sailor', sailors)">Добавить моряка</button>
+  </form>
+  <div class="sailors flex-container">
+    <div class="sailor border rounded border-primary p-2" style="max-width: 400px;" *ngFor="let s of sailors">
+      <div>
+        <h3>{{s.Name}} {{s.Surname}}</h3>
+        <small>{{s.Address}}</small>
+      </div>
+    </div>
+  </div>
+</div>

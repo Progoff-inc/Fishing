@@ -89,5 +89,4 @@ export class Sailor{
     Name:string = '';
     Surname:string = '';
     Address:string = '';
-    Position:string = '';
 }

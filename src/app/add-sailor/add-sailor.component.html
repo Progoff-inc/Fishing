@@ -1,0 +1,18 @@
+<form [formGroup]="sailorForm" (ngSubmit)="add()">
+  <div class="form-group">
+    <label [ngClass]="{'text-danger':(submitted && f.Name.errors )}">Имя</label>
+    <input class="form-control" formControlName="Name" type="text" >
+    <small  class="form-text text-danger" *ngIf="submitted && f.Name.errors">Укажите имя моряка</small>
+  </div>
+  <div class="form-group">
+      <label [ngClass]="{'text-danger':(submitted && f.Surname.errors)}">Фамилия</label>
+      <input class="form-control" formControlName="Surname" type="text">
+      <small  class="form-text text-danger" *ngIf="submitted && f.Surname.errors">Укажите фамилию моряка</small>
+  </div>
+  <div class="form-group">
+      <label [ngClass]="{'text-danger':(submitted && f.Address.errors)}">Адрес</label>
+      <input class="form-control" formControlName="Address" type="text" >
+      <small  class="form-text text-danger" *ngIf="submitted && f.Address.errors">Укажите адрес моряка</small>
+  </div>
+  <button type="submit" class="btn btn-primary" >Добавить</button>
+</form>

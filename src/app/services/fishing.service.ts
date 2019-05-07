@@ -37,6 +37,21 @@ export class FishingService{
     }
 
     /**
+     * Получение всех моряков
+     */
+    getSailors(){
+        return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-sailors');
+    }
+
+    /**
+     * Добавление моряка
+     * @param sailor Новый моряк
+     */
+    addSailor(sailor){
+        return this.http.post<number>(this.baseUrl + 'FishingController.php?Key=add-sailor', sailor);
+    }
+
+    /**
      * Получение списка банок
      */
     getBanks(){
