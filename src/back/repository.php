@@ -6,7 +6,7 @@ class DataBase {
     public function __construct()
     {
         //$this->db = new PDO('mysql:host=localhost;dbname=myblog;charset=UTF8','nlc','12345');
-        $this->db = new PDO('mysql:host=localhost;dbname=nomokoiw_poff;charset=UTF8','nomokoiw_fish','KESRdV2f');
+        $this->db = new PDO('mysql:host=localhost;dbname=nomokoiw_fish;charset=UTF8','nomokoiw_fish','KESRdV2f');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
@@ -86,17 +86,16 @@ class DataBase {
     }
     
     public function getBanks(){
-        // $sth = $this->db->query("SELECT * FROM banks");
-        // $sth->setFetchMode(PDO::FETCH_CLASS, 'Bank');
-        // return $sth->fetchAll();
-        return array();
+        $sth = $this->db->query("SELECT * FROM banks");
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Bank');
+        return $sth->fetchAll();
+        
     }
 
     public function getBoats(){
-        // $sth = $this->db->query("SELECT * FROM boats");
-        // $sth->setFetchMode(PDO::FETCH_CLASS, 'Boat');
-        // return $sth->fetchAll();
-        return array();
+        $sth = $this->db->query("SELECT * FROM boats");
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Boat');
+        return $sth->fetchAll();
     }
 
     public function getBoatsFishings($t, $ds, $df){
@@ -112,7 +111,62 @@ class DataBase {
     }
 
     public function getFishings($ds, $df){
-        return array();
+        
+       
+        $sth = $this->db->prepare("SELECT FishingId, BoatId, DateStart, DateFinish, (select SUM(Weight) FROM fishingbankfish WHERE FishingId=f.FishingId) as Catch from fishings f WHERE DateStart>=? and DateFinish<=?");
+        
+         $sth->execute(array($ds, $df));
+        
+         
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Fishing');
+        $fishings = [];
+        while ($f = $sth->fetch()) {
+            $f->Sailors = $this->getFishingSailors($f->FishingId);
+            $f->Banks = $this->getFishingBanks($f->FishingId);
+            $f->Boat = $this->getBoat($f->BoatId);
+            $fishings[] = $f;
+        }
+        return $fishings;
+    }
+    
+    public function getSailors(){
+        $sth = $this->db->query("SELECT * FROM sailors");
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Sailor');
+        return $sth->fetchAll();
+    }
+    
+    private function getFishingSailors($fid){
+        $sth = $this->db->prepare("SELECT * FROM sailors WHERE SailorId in (SELECT SailorId FROM Fishings");
+        $sth->execute(array($fid));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Sailor');
+        return $sth->fetchAll();
+    }
+    
+    private function getFishingBanks($fid){
+        $sth = $this->db->prepare("SELECT fb.BankId as BankId, b.Name as Name, fb.Quality as Quality FROM fishingbanks fb join banks b on fb.BankId = b.BankId WHERE fb.FishingId=?");
+        $sth->execute(array($fid));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'FishingBank');
+        $banks = [];
+        while ($b = $sth->fetch()) {
+            //$b->Catches = $this->getBankCatches($fid,$b->BankId);
+            $banks[] = $b;
+        }
+        return $banks;
+    }
+    
+    private function getBoat($bid){
+        $sth = $this->db->prepare("SELECT * FROM boats WHERE BoatId=?");
+        $sth->execute(array($bid));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Boat');
+        return $sth->fetch();
+    }
+    
+    private function getBankCatches($fid, $bid){
+        $sth = $this->db->prepare("SELECT FishType, Weight from fishingbankfish where FishingId=? and BankId=?");
+        $sth->execute(array($fid, $bid));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'FishCatch');
+        return $sth->fetchAll();
+        
     }
     
     public function getMaxCatchBoats($ds, $df){
@@ -120,6 +174,12 @@ class DataBase {
     }
 
     public function getBanksAvgCatch($ds, $df){
+        $sth = $this->db->prepare("SELECT FishingId, BoatId, DateStart, DateFinish, (select SUM(Weight) FROM fishingbankfish WHERE FishingId=f.FishingId) as Catch from fishings f WHERE DateStart>=? and DateFinish<=?");
+        
+         $sth->execute(array($ds, $df));
+        
+         
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Fishing');
         return array();
     }
     public function getBankBoatsAboveAvg($bid){
@@ -135,19 +195,71 @@ class DataBase {
     }
 
     public function addBoat($boat){
-        return 1;
+        $res = $this->genInsertQuery($boat,"boats");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        return $this->db->lastInsertId();
+    }
+    
+    public function addSailor($sailor){
+        $res = $this->genInsertQuery($sailor,"sailors");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        return $this->db->lastInsertId();
     }
 
     public function addFishing($fishing){
-        return 1;
+        $sailors = $fishing['Sailors'];
+        unset($fishing['Sailors']);
+        
+        $res = $this->genInsertQuery($fishing,"fishings");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        $id = $this->db->lastInsertId();
+        for($i = 0; $i<count($sailors); $i++){
+            $sailors[$i]['FishingId']=$id;
+            $res = $this->genInsertQuery($sailors[$i],"sailors");
+            $s = $this->db->prepare($res[0]);
+            if($res[1][0]!=null){
+                $s->execute($res[1]);
+            }
+        }
+        return $id;
     }
 
     public function addFishingBank($bank){
-        return 1;
+        $catches = $bank['Catches'];
+        unset($bank['Catches']);
+        $res = $this->genInsertQuery($bank,"fishingbanks");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        for($i = 0; $i<count($catches); $i++){
+            $catches[$i]['FishingId']=$bank['FishingId'];
+            $catches[$i]['BankId']=$bank['BankId'];
+            $res = $this->genInsertQuery($catches[$i],"fishingbankfish");
+            $s = $this->db->prepare($res[0]);
+            if($res[1][0]!=null){
+                $s->execute($res[1]);
+            }
+        }
+        return $this->db->lastInsertId();
     }
 
     public function addBank($bank){
-        return 1;
+        $res = $this->genInsertQuery($bank,"banks");
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        return $this->db->lastInsertId();
     }
 
     public function updateBoat($boat){

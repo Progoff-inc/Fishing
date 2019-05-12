@@ -15,16 +15,17 @@ class Bank{
 class Fishing{
     public $FishingId;
     public $BoatId;
+    public $SailorId;
     public $DateStart;
     public $DateFinish;
+    public $Catch;
+    public $Position;
 
     public $Boat;
-    public $Banks;
-    public $Sailors;
 }
 
 class FishingBank{
-    public $Bank;
+    public $Name;
     public $DateStart;
     public $DateFinish;
     public $Quality;
@@ -38,11 +39,10 @@ class FishCatch{
 }
 
 class Sailor{
-    public $SalorId;
+    public $SailorId;
     public $Name;
     public $Surname;
     public $Address;
-    public $Position;
 }
 
 ?>

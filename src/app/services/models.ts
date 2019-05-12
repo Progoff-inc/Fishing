@@ -85,7 +85,7 @@ export class Catch{
 }
 
 export class Sailor{
-    SalorId:number;
+    SailorId:number;
     Name:string = '';
     Surname:string = '';
     Address:string = '';

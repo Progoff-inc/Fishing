@@ -25,7 +25,7 @@ export class FishingService{
     getBoats(type?:BoatTypes, dateStart?:Date, dateFinish?:Date){
         this.ls.showLoad = true;
         if(type && dateStart && dateFinish){
-            const params = new HttpParams().set('DateStart', dateStart.toDateString()).set('DateFinish', dateFinish.toDateString()).set('Type', type);
+            const params = new HttpParams().set('DateStart', dateStart.toISOString()).set('DateFinish', dateFinish.toISOString()).set('Type', type);
             return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-boats-fishings', {params})
         }else{
             this.http.get<Boat[]>(this.baseUrl + 'FishingController.php?Key=get-boats').subscribe(boats => {
@@ -77,7 +77,7 @@ export class FishingService{
      * @param dateFinish дата конца периода поиска
      */
     getMaxCatchBoats(fishType:FishTypes, dateStart:Date, dateFinish:Date){
-        const params = new HttpParams().set('FishType', fishType).set('DateStart', dateStart.toDateString()).set('DateFinish', dateFinish.toDateString());
+        const params = new HttpParams().set('FishType', fishType).set('DateStart', dateStart.toISOString()).set('DateFinish', dateFinish.toISOString());
         return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-max-catch-fidhings', {params});
     }
 
@@ -86,8 +86,8 @@ export class FishingService{
      * @param dateStart дата начала периода поиска
      * @param dateFinish дата конца периода поиска
      */
-    getBanksAvgCatch(dateStart:Date, dateFinish:Date){
-        const params = new HttpParams().set('DateStart', dateStart.toDateString()).set('DateFinish', dateFinish.toDateString());
+    getBanksAvgCatch(dateStart, dateFinish){
+        const params = new HttpParams().set('DateStart', dateStart.toISOString()).set('DateFinish', dateFinish.toISOString());
         return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-banks-avg-catch', {params});
     }
 
@@ -105,7 +105,7 @@ export class FishingService{
      * @param dateFinish дата конца периода поиска
      */
     getFish(dateStart:Date, dateFinish:Date){
-        const params = new HttpParams().set('DateStart', dateStart.toDateString()).set('DateFinish', dateFinish.toDateString());
+        const params = new HttpParams().set('DateStart', dateStart.toISOString()).set('DateFinish', dateFinish.toISOString());
         return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-fish', {params});
     }
 

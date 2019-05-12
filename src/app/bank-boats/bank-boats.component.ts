@@ -17,13 +17,14 @@ export class BankBoatsComponent implements OnInit {
 
   ngOnInit() {
     let d = new Date();
-    this.filters = {DateStart:new Date(d.getFullYear(), d.getMonth(), 1), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1)}
+    this.filters = {DateStart:new Date(d.getFullYear(), d.getMonth(), 1).toISOString().substring(0,10), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1).toISOString().substring(0,10)}
     this.getBanks();
     
   }
 
   getBanks(){
-    this.fs.getBanksAvgCatch(this.filters.DateStart, this.filters.DateFinish).subscribe(banks => {
+    this.fs.getBanksAvgCatch(new Date(this.filters.DateStart), new Date(this.filters.DateFinish)).subscribe(banks => {
+      console.log(banks)
       this.banks = banks;
       this.banks.forEach(b => {
         this.fs.getBankBoatsAboveAvg(b.BankId).subscribe(boats => {

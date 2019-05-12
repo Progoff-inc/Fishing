@@ -1,5 +1,5 @@
 
-<form [formGroup]="fishingForm" (ngSubmit)="add()">
+<form *ngIf="sailorsValues.length>0" [formGroup]="fishingForm" (ngSubmit)="add()">
     <h3 class="text-center" style="font-weight:400" >Добавление рейса</h3>
     <div class="form-group">
         <label for="exampleInputBoatId1" [ngClass]="{'text-danger':(submitted && f.BoatId.errors)}">Тип судна</label>
@@ -23,24 +23,17 @@
         <div class="catch" [ngClass]="{'active':i==sailors.length-1}" *ngFor="let c of sailors; let i = index">
             <span class="remove" (click)="remove(i)"><i class="fas fa-times" aria-hidden="true"></i></span>
             <div class="form-group">
-                <label [ngClass]="{'text-danger':(csubmitted && c.Name == '')}">Имя</label>
-                <input class="form-control" [(ngModel)]="c.Name" [ngModelOptions]="{standalone: true}" type="text" [disabled]="i!=sailors.length-1">
-                <small  class="form-text text-danger" *ngIf="csubmitted && c.Name == ''">Укажите имя члена экипажа</small>
-            </div>
-            <div class="form-group">
-                <label [ngClass]="{'text-danger':(csubmitted && c.Surname == '')}">Фамилия</label>
-                <input class="form-control" [(ngModel)]="c.Surname" [ngModelOptions]="{standalone: true}" type="text" [disabled]="i!=sailors.length-1">
-                <small  class="form-text text-danger" *ngIf="csubmitted && c.Surname == ''">Укажите фамилию члена экипажа</small>
-            </div>
-            <div class="form-group">
-                <label [ngClass]="{'text-danger':(csubmitted && c.Address == '')}">Адрес</label>
-                <input class="form-control" [(ngModel)]="c.Address" [ngModelOptions]="{standalone: true}" type="text" [disabled]="i!=sailors.length-1">
-                <small  class="form-text text-danger" *ngIf="csubmitted && c.Address == ''">Укажите адрес члена экипажа</small>
+                <label [ngClass]="{'text-danger':(csubmitted && !c.Position)}">Моряк</label>
+                <span *ngIf="i<sailors.length-1 && c.SailorId" class="form-control">{{getSailor(c.SailorId)}}</span>
+                <select *ngIf="i==sailors.length-1" [(ngModel)]="c.SailorId" [ngModelOptions]="{standalone: true}" class="form-control" #type>
+                    <option value="{{f.SailorId}}" *ngFor="let f of sailorsValues">{{f.Name}} {{f.Surname}}</option>
+                </select>
+                <small  class="form-text text-danger" *ngIf="csubmitted && !c.Position">Укажите члена экипажа</small>
             </div>
             <div class="form-group">
                 <label [ngClass]="{'text-danger':(csubmitted && !c.Position)}">Должность</label>
-                <span class="form-control">{{c.Position}}</span>
-                <select [(ngModel)]="c.Position" [ngModelOptions]="{standalone: true}" class="form-control" #type>
+                <span *ngIf="i<sailors.length-1" class="form-control">{{c.Position}}</span>
+                <select *ngIf="i==sailors.length-1" [(ngModel)]="c.Position" [ngModelOptions]="{standalone: true}" class="form-control" #type>
                     <option value="{{f}}" *ngFor="let f of Positions">{{f}}</option>
                 </select>
                 <small  class="form-text text-danger" *ngIf="csubmitted && !c.Position">Укажите должность члена экипажа</small>

@@ -1,14 +1,15 @@
-<div class="flex-container my-4">
-  <div class="filters flex-container" *ngIf="fs.banks.length>0">
-    <div class="filter form-group">
-      <h4>Дата начала</h4>
-      <input class="form-control" [ngModel]="filters.DateStart" type="date">
-    </div>
-    <div class="filter form-group">
-      <h4>Дата конца</h4>
-      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
-    </div>
+<div class="filters flex-container" *ngIf="fs.banks.length>0">
+  <div class="filter form-group">
+    <h4>Дата начала</h4>
+    <input class="form-control" [ngModel]="filters.DateStart" type="date">
   </div>
+  <div class="filter form-group">
+    <h4>Дата конца</h4>
+    <input class="form-control" [ngModel]="filters.DateFinish" type="date">
+  </div>
+</div>
+<div class="flex-container my-4">
+  
   <div class="bank" *ngFor="let b of banks" [ngClass]="{'w-100':b.Show}" (click)="show(b)">
     <h4>{{b.Name}}</h4>
     <small>Средний улов: {{b.AvgCatch}}</small>

@@ -13,21 +13,26 @@ export class AddFishingComponent implements OnInit {
   @Input() fishings:Fishing[];
 
   fishingForm:FormGroup;
-  sailors:Sailor[] = [];
+  sailors = [];
+  sailorsValues:Sailor[] = [];
   submitted = false;
   csubmitted = false;
   constructor(private fb:FormBuilder, private ms:ModalService, public fs:FishingService) { }
 
   ngOnInit() {
-    console.log(this.fishings);
+    
     if(this.fs.boats.length==0){
       this.ms.close();
     }
-    this.fishingForm = this.fb.group({
-      BoatId: [0, Validators.required],
-      DateStart: [new Date().toISOString().substring(0,10), Validators.required],
-      DateFinish: [this.DateFinish.toISOString().substring(0,10), Validators.required]
-    });
+    this.fs.getSailors().subscribe(data => {
+      this.sailorsValues = data;
+      this.fishingForm = this.fb.group({
+        BoatId: [0, Validators.required],
+        DateStart: [new Date().toISOString().substring(0,10), Validators.required],
+        DateFinish: [this.DateFinish.toISOString().substring(0,10), Validators.required]
+      });
+    })
+    
   }
 
   add(){
@@ -44,7 +49,6 @@ export class AddFishingComponent implements OnInit {
       Sailors:this.sailors
     }
     this.fs.addFishing(fishing).subscribe(fid => {
-      console.log(fid);
       this.fishings.push({
         FishingId:fid,
         BoatId:boat.BoatId,
@@ -52,8 +56,9 @@ export class AddFishingComponent implements OnInit {
         DateStart:this.fishingForm.value.DateStart,
         DateFinish:this.fishingForm.value.DateFinish,
         Banks:[],
-        Sailors:this.sailors
+        Sailors:this.sailorsValues.filter(x => this.sailors.map(y => y.SailorId).indexOf(x.SailorId)>-1)
       })
+      console.log(this.fishings);
       this.ms.close();
     })
     
@@ -68,14 +73,14 @@ export class AddFishingComponent implements OnInit {
   addSailor(){
     this.csubmitted = true;
     if(this.sailors.length==0){
-      this.sailors.push(new Sailor());
+      this.sailors.push({SailorId:null, Position:''});
       this.csubmitted = false;
 
     }else{
-      if(this.sailors[this.sailors.length-1].Name=='' || this.sailors[this.sailors.length-1].Position=='' || this.sailors[this.sailors.length-1].Surname=='' || this.sailors[this.sailors.length-1].Address==''){
+      if(this.sailors[this.sailors.length-1].SailorId==null || this.sailors[this.sailors.length-1].Position=='' ){
         return
       }
-      this.sailors.push(new Sailor());
+      this.sailors.push({SailorId:null, Position:''});
       this.csubmitted = false;
       
     }
@@ -83,6 +88,11 @@ export class AddFishingComponent implements OnInit {
   }
   remove(i){
     this.sailors.splice(i,1);
+  }
+
+  getSailor(id){
+    let s = this.sailorsValues.find(x => x.SailorId==id);
+    return s.Name+' '+s.Surname;
   }
 
   get f() { return this.fishingForm.controls;}
