@@ -30,7 +30,7 @@ export class AddSailorComponent implements OnInit {
     }
     this.fs.addSailor(this.sailorForm.value).subscribe(data => {
       this.sailors.unshift({
-        SalorId:data,
+        SailorId:data,
         Name:this.sailorForm.value.Name,
         Surname:this.sailorForm.value.Surname,
         Address:this.sailorForm.value.Address

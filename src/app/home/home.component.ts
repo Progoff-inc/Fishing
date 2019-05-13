@@ -18,12 +18,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     let d = new Date();
-    this.filters = {Type:this.types.length>0?this.types[0]:'', DateStart:new Date(d.getFullYear(), d.getMonth(), 1), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1)}
+    this.filters = {Type: this.types[0], DateStart:new Date(d.getFullYear(), d.getMonth(), 1).toISOString().substring(0,10), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1).toISOString().substring(0,10)}
     this.getBoats();
   }
 
   getBoats(){
-    this.fs.getBoats(this.filters.Type, this.filters.DateStart, this.filters.DateFinish).subscribe(boats => {
+    this.fs.getBoats(this.filters.Type, new Date(this.filters.DateStart), new Date(this.filters.DateFinish)).subscribe(boats => {
+      console.log(boats);
       this.boats = boats;
       this.ls.showLoad=false;
     })
