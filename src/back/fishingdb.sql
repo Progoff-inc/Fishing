@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS users (
+	Id int(20) PRIMARY KEY AUTO_INCREMENT,
+    Name varchar(255) UNIQUE,
+    Email varchar(255) NOT NULL,
+    Password varchar(255) NOT NULL,
+    CreateDate datetime DEFAULT CURRENT_TIMESTAMP,
+    IsAdmin bit DEFAULT false
+);
+
 CREATE TABLE IF NOT EXISTS boats (
 	BoatId int(20) PRIMARY KEY AUTO_INCREMENT,
     Type varchar(255) NOT NULL,

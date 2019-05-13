@@ -14,20 +14,20 @@
     </div>
   </div>
   <h2>Рейсы катеров</h2>
-  <div class="filters flex-container" *ngIf="boats.length>0">
+  <div class="filters flex-container" >
     <div class="filter form-group">
       <h4>Тип судна</h4>
-      <select class="form-control" [ngModel]="filters.Type">
+      <select class="form-control" [(ngModel)]="filters.Type" (change)="getBoats()">
         <option value="{{t}}" *ngFor="let t of types">{{t}}</option>
       </select>
     </div>
     <div class="filter form-group">
       <h4>Дата начала</h4>
-      <input class="form-control" [ngModel]="filters.DateSatrt" type="date">
+      <input class="form-control" [(ngModel)]="filters.DateStart" type="date" (change)="getBoats()">
     </div>
     <div class="filter form-group">
       <h4>Дата конца</h4>
-      <input class="form-control" [ngModel]="filters.DateFinish" type="date">
+      <input class="form-control" [(ngModel)]="filters.DateFinish" type="date" (change)="getBoats()">
     </div>
   </div>
   <div>

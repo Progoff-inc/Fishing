@@ -1,0 +1,38 @@
+.container-fluid{
+    height: 100vh;
+    .form{
+        
+        animation-delay: 0.1s;
+        padding: 20px;
+        max-width: 600px;
+        position: relative;
+        top:-50px;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 4px 4px 8px #adadad;
+        border-radius: 5px;
+        animation: down 0.5s forwards;
+        h2{
+            margin-top: 40px;
+            font-size: 18px;
+            font-weight: 400;
+        }
+        .images{
+            margin-top: 10px;
+            img{
+                margin-right: 5px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}
+
+@keyframes down{
+    from{
+        top: -50px;
+    }
+    to{
+        top: 0;
+    }
+}

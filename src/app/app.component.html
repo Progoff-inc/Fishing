@@ -1,6 +1,13 @@
 
-<app-menu></app-menu>
-<router-outlet></router-outlet>
+<div class="user" *ngIf="us.user">
+    <div>
+        <span>{{us.user.Name}}</span>
+        <span>{{us.user.Email}}</span>
+    </div>
+    <span (click)="us.exit()">Выйти</span>
+</div>
+<app-menu *ngIf="us.user"></app-menu>
+<router-outlet ></router-outlet>
 
 <app-modal></app-modal>
 <app-load></app-load>

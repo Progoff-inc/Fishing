@@ -1,11 +1,11 @@
 <div class="filters flex-container" *ngIf="fs.banks.length>0">
   <div class="filter form-group">
     <h4>Дата начала</h4>
-    <input class="form-control" [ngModel]="filters.DateStart" type="date">
+    <input class="form-control" [(ngModel)]="filters.DateStart" type="date" (change)="getBanks()">
   </div>
   <div class="filter form-group">
     <h4>Дата конца</h4>
-    <input class="form-control" [ngModel]="filters.DateFinish" type="date">
+    <input class="form-control" [(ngModel)]="filters.DateFinish" type="date" (change)="getBanks()">
   </div>
 </div>
 <div class="flex-container my-4">

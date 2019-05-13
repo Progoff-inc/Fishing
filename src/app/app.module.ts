@@ -15,7 +15,10 @@ import { ModalService } from './services/modal.service';
 
 //HTTP запросы
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 import { LoadService } from './services/load.service';
+
+
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { LoadComponent } from './load/load.component';
@@ -31,7 +34,10 @@ import { BankBoatsComponent } from './bank-boats/bank-boats.component';
 import { CatchComponent } from './catch/catch.component';
 import { SailorsComponent } from './sailors/sailors.component';
 import { AddSailorComponent } from './add-sailor/add-sailor.component';
-
+import { SignComponent } from './sign/sign.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { UserService } from './services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +55,10 @@ import { AddSailorComponent } from './add-sailor/add-sailor.component';
     BankBoatsComponent,
     CatchComponent,
     SailorsComponent,
-    AddSailorComponent
+    AddSailorComponent,
+    SignComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +68,7 @@ import { AddSailorComponent } from './add-sailor/add-sailor.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [FormBuilder, HttpClient, ModalService, BsModalService, LoadService, FishingService],
+  providers: [FormBuilder, HttpClient, ModalService, BsModalService, LoadService, FishingService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
