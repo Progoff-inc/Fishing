@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   }
 
   getBoats(){
+    console.log(this.filters.Type);
     this.fs.getBoats(this.filters.Type, new Date(this.filters.DateStart), new Date(this.filters.DateFinish)).subscribe(boats => {
       console.log(boats);
       this.boats = boats;
