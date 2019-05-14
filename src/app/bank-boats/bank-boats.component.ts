@@ -12,7 +12,6 @@ export class BankBoatsComponent implements OnInit {
   boats = []
   filters:any;
   constructor(private fs:FishingService) {
-    console.log(this.banks)
    }
 
   ngOnInit() {
@@ -24,7 +23,6 @@ export class BankBoatsComponent implements OnInit {
 
   getBanks(){
     this.fs.getBanksAvgCatch(new Date(this.filters.DateStart), new Date(this.filters.DateFinish)).subscribe(banks => {
-      console.log(banks)
       this.banks = banks;
       this.banks.forEach(b => {
         this.fs.getBankBoatsAboveAvg(b.BankId).subscribe(boats => {

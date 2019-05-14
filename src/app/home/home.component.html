@@ -9,8 +9,8 @@
       <p>Дата постройки: {{b.BuildDate | date:"dd.MM.yyyy"}}</p>
       <div class="btn btn-link" (click)="ms.open('update-boat', b)">Редактировать</div>
     </div>
-    <div class="new-ship">
-      <div class="btn btn-success" (click)="ms.open('add-boat', fs.boats)" >Добавить</div>
+    <div *ngIf="us.user && us.user.IsAdmin" class="new-ship">
+      <div *ngIf="us.user && us.user.IsAdmin" class="btn btn-success" (click)="ms.open('add-boat', fs.boats)" >Добавить</div>
     </div>
   </div>
   <h2>Рейсы катеров</h2>

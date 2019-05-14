@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FishTypes } from '../services/models';
 import { FishingService } from '../services/fishing.service';
-import { fstat } from 'fs';
 
 @Component({
   selector: 'app-catch',
@@ -38,7 +37,7 @@ export class CatchComponent implements OnInit {
     {BoatName: "Ласточка", DateStart: new Date(), DateFinish: new Date, Catch: 1200.45}
   ]
 
-  curBank = this.fs.banks[0].BankId;
+  curBank = this.fs.banks[0]?this.fs.banks[0].BankId:1;
   
 
   constructor(public fs:FishingService) {

@@ -7,6 +7,14 @@ class Boat{
     public $BuildDate;
 }
 
+class User{
+    public $Id;
+    public $Name;
+    public $Email;
+    public $Password;
+    public $CreateDate;
+}
+
 class Bank{
     public $BankId;
     public $Name;
@@ -15,11 +23,9 @@ class Bank{
 class Fishing{
     public $FishingId;
     public $BoatId;
-    public $SailorId;
     public $DateStart;
     public $DateFinish;
     public $Catch;
-    public $Position;
 
     public $Boat;
 }
@@ -29,6 +35,7 @@ class FishingBank{
     public $DateStart;
     public $DateFinish;
     public $Quality;
+    public $FishingBankId;
 
     public $Catches;
 }
@@ -43,6 +50,11 @@ class Sailor{
     public $Name;
     public $Surname;
     public $Address;
+}
+
+class Fish{
+    public $FishType;
+    public $Fishings;
 }
 
 ?>

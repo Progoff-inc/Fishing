@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Fishing, Catch, FishingBank } from '../services/models';
 import { FishingService } from '../services/fishing.service';
 import { ModalService } from '../services/modal.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-fishings',
@@ -11,7 +12,7 @@ import { ModalService } from '../services/modal.service';
 export class FishingsComponent implements OnInit {
   filters:any;
   fishings:any;
-  constructor(public fs:FishingService, public ms:ModalService) { }
+  constructor(public fs:FishingService, public ms:ModalService, public us:UserService) { }
 
   ngOnInit() {
     let d = new Date();
@@ -21,7 +22,6 @@ export class FishingsComponent implements OnInit {
 
   getFishings(){
     this.fs.getFishings(new Date(this.filters.DateStart), new Date(this.filters.DateFinish)).subscribe(fishings => {
-      console.log(fishings);
       this.fishings = fishings;
       this.fishings.forEach(f => {
         f['Show']=false;

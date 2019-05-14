@@ -18,7 +18,6 @@ export class UpdateBoatComponent implements OnInit {
   constructor(private fs:FishingService, private ms:ModalService, private fb:FormBuilder) { }
 
   ngOnInit() {
-    console.log(this.boat);
     this.boatForm = this.fb.group({
       Name: [this.boat.Name, Validators.required],
       Type: [this.boat.Type, [Validators.required]],
@@ -33,7 +32,7 @@ export class UpdateBoatComponent implements OnInit {
     }
     this.checkBoat();
     if(this.changes.Keys.length>0){
-      this.fs.updateBoat(this.changes, this.boat.BoatId).subscribe(()=>{
+      this.fs.updateBoat(this.changes, this.boat.BoatId).subscribe((a)=>{
         for(let i = 0; i<this.changes.Keys.length; i++){
           this.boat[this.changes.Keys[i]] = this.changes.Values[i];
         }

@@ -29,8 +29,8 @@ export class SignInComponent implements OnInit {
     }
     this.us.signIn(this.userForm.value.Email, this.userForm.value.Password).subscribe(data => {
       if(data){
-        console.log(data);
         data.Password=this.userForm.value.Password;
+        data.IsAdmin = Boolean(Number(data.IsAdmin));
         this.us.User = data;
         this.us.save(true);
         this.router.navigate(['/']);

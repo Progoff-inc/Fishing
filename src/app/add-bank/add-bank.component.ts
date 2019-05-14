@@ -18,7 +18,6 @@ export class AddBankComponent implements OnInit {
 
   add(n){
     this.submitted = true;
-    console.log(n);
     if(n == ''){
       return;
     }

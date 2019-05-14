@@ -6,7 +6,7 @@
       <h4>{{b.Name}}</h4>
       <small>{{b.Quality}}</small>
     </div>
-    <div class="new-bank">
+    <div *ngIf="us.user && us.user.IsAdmin" class="new-bank">
       <i class="fas fa-plus" aria-hidden="true"  (click)="ms.open('add-bank', fs.banks)"></i>
     </div>
   </div>

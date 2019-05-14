@@ -58,7 +58,6 @@ export class AddFishingComponent implements OnInit {
         Banks:[],
         Sailors:this.sailorsValues.filter(x => this.sailors.map(y => y.SailorId).indexOf(x.SailorId)>-1)
       })
-      console.log(this.fishings);
       this.ms.close();
     })
     

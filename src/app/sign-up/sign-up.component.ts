@@ -26,12 +26,12 @@ export class SignUpComponent implements OnInit {
     if(this.userForm.invalid){
       return;
     }
-    console.log(this.userForm.value)
     this.us.signUp(this.userForm.value).subscribe(data => {
-      console.log(data);
       if(data){
         data.Password=this.userForm.value.Password;
+        data.IsAdmin = Boolean(Number(data.IsAdmin));
         this.us.User = data;
+
         this.us.save(true);
         this.router.navigate(['/']);
       }

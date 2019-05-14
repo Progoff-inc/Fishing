@@ -74,7 +74,7 @@
       
       
     </div>
-    <div class="new-fishing">
+    <div *ngIf="us.user && us.user.IsAdmin" class="new-fishing">
       <button class="btn btn-success" (click)="ms.open('add-fishing',fishings)" [disabled]="fs.boats.length == 0">Добавить рейс</button>
       
     </div>

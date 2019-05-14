@@ -15,6 +15,9 @@ if(isset($_GET['Key']))
         case 'get-boats':
             echo json_encode($ctxt->getBoats());
             break;
+        case 'get-sailors':
+            echo json_encode($ctxt->getSailors());
+            break;
         case 'get-boats-fishings':
             echo json_encode($ctxt->getBoatsFishings($_GET['Type'], $_GET['DateStart'], $_GET['DateFinish']));
             break;
@@ -22,7 +25,7 @@ if(isset($_GET['Key']))
             echo json_encode($ctxt->getFishings($_GET['DateStart'], $_GET['DateFinish']));
             break;
         case 'get-max-catch-fidhings':
-            echo json_encode($ctxt->getMaxCatchBoats($_GET['DateStart'], $_GET['DateFinish']));
+            echo json_encode($ctxt->getMaxCatchBoats($_GET['FishType'], $_GET['DateStart'], $_GET['DateFinish']));
             break;
         case 'get-banks-avg-catch':
             echo json_encode($ctxt->getBanksAvgCatch($_GET['DateStart'], $_GET['DateFinish']));
@@ -39,6 +42,10 @@ if(isset($_GET['Key']))
         case 'add-boat':
             $b = json_decode(file_get_contents('php://input'), true);
             echo json_encode($ctxt->addBoat($b));
+            break;
+        case 'add-sailor':
+            $b = json_decode(file_get_contents('php://input'), true);
+            echo json_encode($ctxt->addSailor($b));
             break;
         case 'add-fishing':
             $b = json_decode(file_get_contents('php://input'), true);

@@ -15,7 +15,6 @@ export class AddBoatComponent implements OnInit {
   boatForm:FormGroup;
   submitted = false;
   constructor(private fb:FormBuilder, private ms:ModalService, private fs:FishingService) { 
-    console.log(this.types);
   }
 
   ngOnInit() {

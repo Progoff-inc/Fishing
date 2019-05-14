@@ -74,7 +74,6 @@ export class UserService{
      */
     public save(local = false){
         if(local){
-            console.log(this.user);
             localStorage.setItem('userFishing', JSON.stringify(this.user));
         }
         sessionStorage.setItem('userFishing', JSON.stringify(this.user));
