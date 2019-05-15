@@ -19,6 +19,7 @@ export class AddFishingBankComponent implements OnInit {
     FishTypes.Сarp, FishTypes.Cod, FishTypes.Eel, FishTypes.Greenling, FishTypes.Grouper, FishTypes.Gudgeon, FishTypes.Mackerel];
   constructor(public fs:FishingService, private ms:ModalService, private fb:FormBuilder) { }
   @Input() fishing:Fishing;
+  ngOn
   ngOnInit() {
     this.bankForm = this.fb.group({
       BankId: [0, Validators.required],
@@ -26,6 +27,10 @@ export class AddFishingBankComponent implements OnInit {
       DateStart: [null, Validators.required],
       DateFinish: [null, Validators.required]
     });
+  }
+
+  getDate(d){
+    return new Date(d).toISOString().substring(0,10);
   }
 
   add(){

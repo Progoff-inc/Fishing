@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalService } from '../services/modal.service';
-import { Fishing, Sailor, Positions } from '../services/models';
+import { Fishing, Sailor, Positions, Boat } from '../services/models';
 import { FishingService } from '../services/fishing.service';
+import { LoadService } from '../services/load.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'add-fishing',
@@ -15,23 +17,26 @@ export class AddFishingComponent implements OnInit {
   fishingForm:FormGroup;
   sailors = [];
   sailorsValues:Sailor[] = [];
+  boatsValues:Boat[] = [];
   submitted = false;
   csubmitted = false;
-  constructor(private fb:FormBuilder, private ms:ModalService, public fs:FishingService) { }
+  constructor(private fb:FormBuilder, private ms:ModalService, public fs:FishingService, private ls:LoadService) { }
 
   ngOnInit() {
     
     if(this.fs.boats.length==0){
       this.ms.close();
     }
-    this.fs.getSailors().subscribe(data => {
-      this.sailorsValues = data;
-      this.fishingForm = this.fb.group({
-        BoatId: [0, Validators.required],
-        DateStart: [new Date().toISOString().substring(0,10), Validators.required],
-        DateFinish: [this.DateFinish.toISOString().substring(0,10), Validators.required]
-      });
+    this.fishingForm = this.fb.group({
+      BoatId: ['', Validators.required],
+      DateStart: [new Date().toISOString().substring(0,10), Validators.required],
+      DateFinish: [this.DateFinish.toISOString().substring(0,10), Validators.required]
+    });
+    this.getSailorsBoats();
+    this.fishingForm.valueChanges.subscribe(x=>{
+      this.getSailorsBoats();
     })
+    
     
   }
 
@@ -56,10 +61,33 @@ export class AddFishingComponent implements OnInit {
         DateStart:this.fishingForm.value.DateStart,
         DateFinish:this.fishingForm.value.DateFinish,
         Banks:[],
-        Sailors:this.sailorsValues.filter(x => this.sailors.map(y => y.SailorId).indexOf(x.SailorId)>-1)
+        Sailors:this.sailors.map(x => {
+          let s = {
+            SailorId:x.SailorId,
+            Name:this.sailorsValues.find(y => y.SailorId==x.SailorId).Name,
+            Surname:this.sailorsValues.find(y => y.SailorId==x.SailorId).Surname,
+            Position:x.Position,
+            Address:this.sailorsValues.find(y => y.SailorId==x.SailorId).Address
+          }
+          console.log(s);
+          return s;
+        })
       })
       this.ms.close();
     })
+    
+  }
+  getSailorsBoats(){
+    if(this.fishingForm.value.DateStart && this.fishingForm.value.DateFinish){
+      forkJoin(
+        this.fs.getFreeSailors(new Date(this.fishingForm.value.DateStart), new Date(this.fishingForm.value.DateFinish)),
+        this.fs.getFreeBoats(new Date(this.fishingForm.value.DateStart), new Date(this.fishingForm.value.DateFinish)),
+      )
+      .subscribe(([res1, res2]) => {
+          this.sailorsValues = res1;
+          this.boatsValues = res2;
+      });
+    }
     
   }
 
@@ -95,6 +123,7 @@ export class AddFishingComponent implements OnInit {
   }
 
   get f() { return this.fishingForm.controls;}
+  get sailorsIds() {return this.sailors.map(x => x.SailorId)};
   get Positions() { return [Positions.Boatswain, Positions.Captain, Positions.ChiefMate, Positions.Engineer, Positions.Navigator, Positions.RadioStaff, Positions.Sailor, Positions.Shopman]}
 
 }

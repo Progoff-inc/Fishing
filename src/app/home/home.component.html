@@ -7,7 +7,7 @@
       <small>{{b.Type}}</small>
       <p>Водоизмещение: {{b.Displacement}} т.</p>
       <p>Дата постройки: {{b.BuildDate | date:"dd.MM.yyyy"}}</p>
-      <div class="btn btn-link" (click)="ms.open('update-boat', b)">Редактировать</div>
+      <div *ngIf="us.user && us.user.IsAdmin" class="btn btn-link" (click)="ms.open('update-boat', b)">Редактировать</div>
     </div>
     <div *ngIf="us.user && us.user.IsAdmin" class="new-ship">
       <div *ngIf="us.user && us.user.IsAdmin" class="btn btn-success" (click)="ms.open('add-boat', fs.boats)" >Добавить</div>
@@ -23,11 +23,11 @@
     </div>
     <div class="filter form-group">
       <h4>Дата начала</h4>
-      <input class="form-control" [(ngModel)]="filters.DateStart" type="date" (change)="getBoats()">
+      <input class="form-control" [(ngModel)]="filters.DateStart"  type="date" (change)="getBoats()">
     </div>
     <div class="filter form-group">
       <h4>Дата конца</h4>
-      <input class="form-control" [(ngModel)]="filters.DateFinish" type="date" (change)="getBoats()">
+      <input class="form-control" [(ngModel)]="filters.DateFinish" min="{{filters.DateStart}}" type="date" (change)="getBoats()">
     </div>
   </div>
   <div>

@@ -19,6 +19,7 @@ export class UserService{
             this.signIn(u.Email, u.Password).subscribe(data => {
                 if(data){
                     data.Password=u.Password;
+                    data.IsAdmin=Boolean(Number(data.IsAdmin));
                     this.User = data;
                     this.save();
                 }else{
@@ -34,6 +35,7 @@ export class UserService{
             this.signIn(u.Email, u.Password).subscribe(data => {
                 if(data){
                     data.Password=u.Password;
+                    data.IsAdmin=Boolean(Number(data.IsAdmin));
                     this.User = data;
                     this.save();
                 }else{

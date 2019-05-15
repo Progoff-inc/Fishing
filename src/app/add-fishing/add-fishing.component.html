@@ -1,11 +1,12 @@
 
-<form *ngIf="sailorsValues.length>0" [formGroup]="fishingForm" (ngSubmit)="add()">
+<form [formGroup]="fishingForm" (ngSubmit)="add()">
     <h3 class="text-center" style="font-weight:400" >Добавление рейса</h3>
     <div class="form-group">
-        <label for="exampleInputBoatId1" [ngClass]="{'text-danger':(submitted && f.BoatId.errors)}">Тип судна</label>
-        <select [ngClass]="{'border-danger':(submitted && f.BoatId.errors)}" class="form-control" formControlName="BoatId" >
-          <option value="{{b.BoatId}}" *ngFor="let b of fs.boats">{{b.Name}}</option>
+        <label for="exampleInputBoatId1" [ngClass]="{'text-danger':(submitted && f.BoatId.errors)}">Судно</label>
+        <select *ngIf="boatsValues.length>0" [ngClass]="{'border-danger':(submitted && f.BoatId.errors)}" class="form-control" formControlName="BoatId" >
+          <option value="{{b.BoatId}}" *ngFor="let b of boatsValues">{{b.Name}}</option>
         </select>
+        <p *ngIf="boatsValues.length==0">Период не выбран или в данный период отсутствуют свободные судна</p>
         <small  class="form-text text-danger" *ngIf="submitted && f.BoatId.errors && f.BoatId.errors.required">Укажите судно</small>
     </div>
     <div class="form-group">
@@ -15,18 +16,18 @@
     </div>
     <div class="form-group">
         <label [ngClass]="{'text-danger':(submitted && f.DateFinish.errors)}" for="D1">Дата конца</label>
-        <input [ngClass]="{'border-danger':(submitted && f.DateFinish.errors)}" formControlName="DateFinish" type="date" class="form-control" id="D1">
+        <input [ngClass]="{'border-danger':(submitted && f.DateFinish.errors)}" formControlName="DateFinish" type="date" class="form-control" min="{{fishingForm.value.DateStart}}" id="D1">
         <small  class="form-text text-danger" *ngIf="submitted && f.DateFinish.errors && f.DateFinish.errors.required">Введите дату окончания рейса</small>
     </div>
-    <h3>Команда</h3>
-    <div class="catches flex-container">
+    <h3 *ngIf="sailorsValues.length>0">Команда</h3>
+    <div *ngIf="sailorsValues.length>0" class="catches flex-container">
         <div class="catch" [ngClass]="{'active':i==sailors.length-1}" *ngFor="let c of sailors; let i = index">
             <span class="remove" (click)="remove(i)"><i class="fas fa-times" aria-hidden="true"></i></span>
             <div class="form-group">
                 <label [ngClass]="{'text-danger':(csubmitted && !c.Position)}">Моряк</label>
                 <span *ngIf="i<sailors.length-1 && c.SailorId" class="form-control">{{getSailor(c.SailorId)}}</span>
                 <select *ngIf="i==sailors.length-1" [(ngModel)]="c.SailorId" [ngModelOptions]="{standalone: true}" class="form-control" #type>
-                    <option value="{{f.SailorId}}" *ngFor="let f of sailorsValues">{{f.Name}} {{f.Surname}}</option>
+                    <option value="{{f.SailorId}}" *ngFor="let f of sailorsValues" [disabled]="sailorsIds.indexOf(f.SailorId)>-1">{{f.Name}} {{f.Surname}}</option>
                 </select>
                 <small  class="form-text text-danger" *ngIf="csubmitted && !c.Position">Укажите члена экипажа</small>
             </div>
@@ -34,7 +35,7 @@
                 <label [ngClass]="{'text-danger':(csubmitted && !c.Position)}">Должность</label>
                 <span *ngIf="i<sailors.length-1" class="form-control">{{c.Position}}</span>
                 <select *ngIf="i==sailors.length-1" [(ngModel)]="c.Position" [ngModelOptions]="{standalone: true}" class="form-control" #type>
-                    <option value="{{f}}" *ngFor="let f of Positions">{{f}}</option>
+                    <option value="{{f}}" *ngFor="let f of Positions" >{{f}}</option>
                 </select>
                 <small  class="form-text text-danger" *ngIf="csubmitted && !c.Position">Укажите должность члена экипажа</small>
             </div>

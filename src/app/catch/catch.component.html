@@ -7,7 +7,7 @@
     </div>
     <div class="filter form-group">
       <h4>Дата конца</h4>
-      <input class="form-control" [(ngModel)]="filters.DateFinish" type="date" (change)="getFish()">
+      <input class="form-control" [(ngModel)]="filters.DateFinish" min="{{filters.DateStart}}" type="date" (change)="getFish()">
     </div>
   </div>
   <div class="flex-container my-4">

@@ -19,13 +19,13 @@
   </div>
   <div class="form-group">
       <label [ngClass]="{'text-danger':(submitted && f.DateStart.errors)}" for="D">Дата начала</label>
-      <input [ngClass]="{'border-danger':(submitted && f.DateStart.errors)}" formControlName="DateStart" type="date" class="form-control" id="D" >
-      <small  class="form-text text-danger" *ngIf="submitted && f.DateStart.errors && f.DateStart.errors.required">Введите дату начала рейса</small>
+      <input [ngClass]="{'border-danger':(submitted && f.DateStart.errors)}" formControlName="DateStart" type="date" min="{{getDate(fishing.DateStart)}}" max="{{getDate(fishing.DateFinish)}}" class="form-control" id="D" >
+      <small  class="form-text text-danger" *ngIf="submitted && f.DateStart.errors && f.DateStart.errors.required">Введите дату начала ловли на банке</small>
   </div>
   <div class="form-group">
       <label [ngClass]="{'text-danger':(submitted && f.DateFinish.errors)}" for="D1">Дата конца</label>
-      <input [ngClass]="{'border-danger':(submitted && f.DateFinish.errors)}" formControlName="DateFinish" type="date" class="form-control" id="D1">
-      <small  class="form-text text-danger" *ngIf="submitted && f.DateFinish.errors && f.DateFinish.errors.required">Введите дату окончания рейса</small>
+      <input [ngClass]="{'border-danger':(submitted && f.DateFinish.errors)}" formControlName="DateFinish" type="date"  min="{{bankForm.value.DateStart?bankForm.value.DateStart:getDate(fishing.DateStart)}}" max="{{getDate(fishing.DateFinish)}}" class="form-control" id="D1">
+      <small  class="form-text text-danger" *ngIf="submitted && f.DateFinish.errors && f.DateFinish.errors.required">Введите дату окончания ловли на банке</small>
   </div>
   <h3>Улов</h3>
   <div class="catches flex-container">

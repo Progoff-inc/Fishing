@@ -45,6 +45,20 @@ export class FishingService{
     }
 
     /**
+     * Получение свободных моряков
+     */
+    getFreeSailors(dateStart, dateFinish){
+        return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-free-sailors&DateStart='+dateStart.toISOString()+'&DateFinish='+dateFinish.toISOString());
+    }
+
+    /**
+     * Получение свободных моряков
+     */
+    getFreeBoats(dateStart, dateFinish){
+        return this.http.get<any>(this.baseUrl + 'FishingController.php?Key=get-free-boats&DateStart='+dateStart.toISOString()+'&DateFinish='+dateFinish.toISOString());
+    }
+
+    /**
      * Добавление моряка
      * @param sailor Новый моряк
      */

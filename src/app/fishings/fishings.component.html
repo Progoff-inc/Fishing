@@ -7,7 +7,7 @@
     </div>
     <div class="filter form-group">
       <h4>Дата конца</h4>
-      <input class="form-control" [(ngModel)]="filters.DateFinish" type="date" (change)="getFishings()">
+      <input class="form-control" [(ngModel)]="filters.DateFinish" type="date" min="{{filters.DateStart}}" (change)="getFishings()">
     </div>
   </div>
   <div class="fishings">
@@ -42,7 +42,7 @@
               <span *ngFor="let c of b.Catches">{{c.FishType}} - {{c.Weight}}</span>
             </div>
           </div>
-          <div class="new-bank">
+          <div *ngIf="us.user && us.user.IsAdmin" class="new-bank">
             <i class="fas fa-plus" aria-hidden="true" [ngClass]="{'invalid-add':fs.banks.length==0}" (click)="fs.banks.length==0?'':ms.open('add-fishing-bank',f)"></i>
           </div>
         </div>
