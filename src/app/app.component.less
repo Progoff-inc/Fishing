@@ -15,9 +15,26 @@
     transition: 0.5s;
     div span{
         margin-right: 5px;
+        
     }
     &>span{
         cursor: pointer;
+        position: relative;
+        &::after{
+            content: '';
+            display: block;
+            width: 0;
+            height: 1px;
+            transition: 0.5s;
+            background-color:white;
+            position: absolute;
+            bottom: -1px;
+        }
+        &:hover{
+            &::after{
+                width: 100%;
+            }
+        }
     }
     &:hover{
         top:0;

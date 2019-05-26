@@ -2,13 +2,13 @@
   <h2>Моряки</h2>
   <form class="form-inline">
     <div class="form-group mr-sm-3 mb-2 ">
-      <input type="password" class="form-control" id="inputPassword2" placeholder="Поиск">
+      <input type="text" class="form-control" placeholder="Поиск" #find_value>
     </div>
-    <button type="submit" class="btn btn-primary mb-2">Найти</button>
+    <button type="submit" class="btn btn-primary mb-2" (click)="find(find_value.value)">Найти</button>
     <button *ngIf="us.user && us.user.IsAdmin" class="btn btn-link mb-2" (click)="ms.open('add-sailor', sailors)">Добавить моряка</button>
   </form>
   <div class="sailors flex-container">
-    <div class="sailor border rounded border-primary p-2" style="max-width: 400px;" *ngFor="let s of sailors">
+    <div class="sailor border rounded border-primary p-2" style="max-width: 400px;" *ngFor="let s of findResults?findResults:sailors">
       <div>
         <h3>{{s.Name}} {{s.Surname}}</h3>
         <small>{{s.Address}}</small>

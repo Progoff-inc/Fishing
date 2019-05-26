@@ -36,6 +36,12 @@ if(isset($_GET['Key']))
         case 'get-fish':
             echo json_encode($ctxt->getFish($_GET['DateStart'], $_GET['DateFinish']));
             break;
+        case 'get-free-boats':
+            echo json_encode($ctxt->getFreeBoats($_GET['DateStart'], $_GET['DateFinish']));
+            break;
+        case 'get-free-sailors':
+            echo json_encode($ctxt->getFreeSailors($_GET['DateStart'], $_GET['DateFinish']));
+            break;
         case 'get-bank-fish-fishings':
             echo json_encode($ctxt->getBankFishFishings($_GET['Id'], $_GET['FishType']));
             break;

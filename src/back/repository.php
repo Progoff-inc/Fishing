@@ -136,6 +136,22 @@ class DataBase {
         }
         return $boats;
     }
+    
+    public function getFreeBoats($ds, $df){
+        $sth = $this->db->prepare("SELECT b.BoatId, b.Name from boats b WHERE b.BoatId NOT IN (select DISTINCT b.BoatId from fishings f JOIN boats b ON f.BoatId = b.BoatId WHERE f.DateStart<=? and f.DateFinish>=?)");
+        
+        $sth->execute(array($ds, $df));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Boat');
+        return $sth->fetchAll();
+    }
+    
+    public function getFreeSailors($ds, $df){
+        $sth = $this->db->prepare("SELECT b.SailorId, b.Surname, b.Name, b.Address from sailors b WHERE b.SailorId NOT IN (select DISTINCT s.SailorId from fishings f RIGHT JOIN fishingsailor fs ON fs.FishingId = f.FishingId JOIN sailors s ON fs.SailorId=s.SailorId WHERE f.DateStart<=? and f.DateFinish>=?)");
+        
+        $sth->execute(array($ds, $df));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Sailor');
+        return $sth->fetchAll();
+    }
 
     public function getFishings($ds, $df, $bid=null){
         
@@ -173,7 +189,7 @@ class DataBase {
     }
     
     private function getFishingSailors($fid){
-        $sth = $this->db->prepare("SELECT s.SailorId as SailorId, s.Name as Name, s.Surname as Surname, fs.Position as Position FROM fishingsailor fs JOIN sailors s ON fs.SailorId = s.SailorId WHERE fs.FishingId=?");
+        $sth = $this->db->prepare("SELECT s.SailorId as SailorId, s.Name as Name, s.Surname as Surname, fs.Position as Position, s.Address FROM fishingsailor fs JOIN sailors s ON fs.SailorId = s.SailorId WHERE fs.FishingId=?");
         $sth->execute(array($fid));
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Sailor');
         return $sth->fetchAll();
