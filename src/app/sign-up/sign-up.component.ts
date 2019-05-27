@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class SignUpComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
+  showMessage = false;
   constructor(private fb:FormBuilder, private us:UserService, private router:Router) { }
 
   ngOnInit() {
@@ -19,6 +20,9 @@ export class SignUpComponent implements OnInit {
       Email: ['', [Validators.required, Validators.email]],
       Password: ['', Validators.required]
     });
+    this.userForm.valueChanges.subscribe(()=>{
+      this.showMessage=false;
+    })
   }
 
   signUp(){
@@ -34,6 +38,8 @@ export class SignUpComponent implements OnInit {
 
         this.us.save(true);
         this.router.navigate(['/']);
+      }else{
+        this.showMessage = true;
       }
       
     })

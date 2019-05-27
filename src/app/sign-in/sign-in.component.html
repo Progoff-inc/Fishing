@@ -13,6 +13,9 @@
       <input [(ngModel)]="save" [ngModelOptions]="{standalone: true}" type="checkbox" class="form-check-input" id="exampleCheck1">
       <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
     </div>
+    <div class="alert alert-danger" *ngIf="showMessage">
+        Введены неверные данные для входа
+    </div>
     <button type="submit" class="btn btn-primary" (click)="signIn()">Войти</button>
     <button class="btn btn-link" routerLink="/sign/up">Регистрация</button>
   </form>

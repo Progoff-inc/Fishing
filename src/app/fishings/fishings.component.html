@@ -17,7 +17,7 @@
         <div class="item">
           <h4>Судно</h4>
           <small>{{f.Boat.Name}} ({{f.Boat.Type}})</small><br>
-          <small *ngIf="f.Catch">Улов: {{f.Catch}} т.</small>
+          <small *ngIf="f.Catch">Улов: {{fs.round(f.Catch)}} т.</small>
         </div>
         <div class="item">
           <h4>Дата начала</h4>

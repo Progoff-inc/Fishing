@@ -12,7 +12,7 @@
   
   <div class="bank" *ngFor="let b of banks" [ngClass]="{'w-100':b.Show}" (click)="show(b)">
     <h4>{{b.Name}}</h4>
-    <small>Средний улов: {{b.AvgCatch}}</small>
+    <small>Средний улов: {{fs.round(b.AvgCatch)}}</small>
     <h4 class="my-4" *ngIf="b.Show">Cудна</h4>
     <div class="flex-container" *ngIf="b.Show">
       <div class="boat" *ngFor="let boat of b.Boats">
@@ -24,7 +24,7 @@
     <div class="flex-container" *ngIf="b.Show && b.BoatsAvg">
       <div class="boat" *ngFor="let boat of b.BoatsAvg">
         <h5>{{boat.Name}}</h5>
-        <small>Улов: {{boat.Catch}}</small>
+        <small>Улов: {{fs.round(boat.Catch)}}</small>
       </div>
     </div>
   </div>

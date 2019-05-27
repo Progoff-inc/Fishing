@@ -183,6 +183,15 @@ export class FishingService{
     updateBoat(changes:Changes, boatId){
         return this.http.post<any>(this.baseUrl + 'FishingController.php?Key=update-boat&Id='+boatId, changes);
     }
+
+    /**
+     * округление до заданной точности
+     * @param n число для округления
+     * @param a точность
+     */
+    round(n:number, a:number = 2){
+        return Math.round(n * (Math.pow(10, a))) / (Math.pow(10, a))
+    }
 }
 
 export interface NewBoat{

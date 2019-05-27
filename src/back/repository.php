@@ -85,6 +85,12 @@ class DataBase {
         
     }
     
+    public function checkUser($e){
+        $s = $this->db->prepare("SELECT * FROM users WHERE Email=?");
+        $s->execute(array($e));
+        return count($s->fetchAll())==0;
+    }
+    
     public function getUser($e, $p){
         $s = $this->db->prepare("SELECT Id, Name, Email, IsAdmin FROM users WHERE Email=? and Password=?");
         $s->execute(array($e, md5(md5($p))));
@@ -93,13 +99,18 @@ class DataBase {
     }
     
     public function addUser($user){
-        $user['Password'] = md5(md5($user['Password']));
-        $res = $this->genInsertQuery($user,"users");
-        $s = $this->db->prepare("INSERT INTO users (Name,Email,Password) VALUES (?,?,?);");
-        $s->execute($res[1]);
+        if($this->checkUser($user['Email'])){
+            $user['Password'] = md5(md5($user['Password']));
+            $res = $this->genInsertQuery($user,"users");
+            $s = $this->db->prepare("INSERT INTO users (Name,Email,Password) VALUES (?,?,?);");
+            $s->execute($res[1]);
+            
+            
+            return $this->getUserById($this->db->lastInsertId());
+        }else{
+            return null;
+        }
         
-        
-        return $this->getUserById($this->db->lastInsertId());
     }
     
     private function getUserById($id){

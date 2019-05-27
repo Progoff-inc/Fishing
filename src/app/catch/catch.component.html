@@ -22,7 +22,7 @@
         <div class="boat" *ngFor="let fishing of f.Fishings">
           <h5>{{fishing.BoatName}}</h5>
           <small>{{fishing.DateStart | date:"dd.MM.yyyy"}} - {{fishing.DateFinish | date:"dd.MM.yyyy"}}</small>
-          <small>Улов: {{fishing.Catch}}</small>
+          <small>Улов: {{fs.round(fishing.Catch)}}</small>
         </div>
       </div>
       <div class="black">
@@ -32,7 +32,7 @@
       <div class="flex-container black" *ngIf="f.Show && f.MaxBoats">
         <div class="boat" *ngFor="let mb of f.MaxBoats">
           <h5>{{mb.Name}}</h5>
-          <small>Улов: {{mb.Catch}}</small>
+          <small>Улов: {{fs.round(mb.Catch)}}</small>
         </div>
       </div>
       <div class="black">
@@ -49,7 +49,7 @@
         <div class="boat" *ngFor="let fishing of f.BankFishings">
           <h5>{{fishing.BoatName}}</h5>
           <small>{{fishing.DateStart | date:"dd.MM.yyyy"}} - {{fishing.DateFinish | date:"dd.MM.yyyy"}}</small>
-          <small>Улов: {{fishing.Catch}}</small>
+          <small>Улов: {{fs.round(fishing.Catch)}}</small>
         </div>
       </div>
     </div>

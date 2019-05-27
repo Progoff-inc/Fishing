@@ -11,7 +11,7 @@ export class BankBoatsComponent implements OnInit {
   banks = []
   boats = []
   filters:any;
-  constructor(private fs:FishingService) {
+  constructor(public fs:FishingService) {
    }
 
   ngOnInit() {

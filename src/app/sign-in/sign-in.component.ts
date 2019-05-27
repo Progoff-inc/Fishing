@@ -13,6 +13,7 @@ export class SignInComponent implements OnInit {
   userForm:FormGroup;
   save = false;
   submitted = false;
+  showMessage = false;
   constructor(private fb:FormBuilder, private us:UserService, private router:Router) { }
 
   ngOnInit() {
@@ -20,6 +21,9 @@ export class SignInComponent implements OnInit {
       Email: ['', [Validators.required, Validators.email]],
       Password: ['', Validators.required]
     });
+    this.userForm.valueChanges.subscribe(()=>{
+      this.showMessage=false;
+    })
   }
 
   signIn(){
@@ -34,6 +38,8 @@ export class SignInComponent implements OnInit {
         this.us.User = data;
         this.us.save(true);
         this.router.navigate(['/']);
+      }else{
+        this.showMessage = true;
       }
       
     })
