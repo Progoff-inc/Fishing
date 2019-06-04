@@ -1,4 +1,5 @@
 <form [formGroup]="sailorForm" (ngSubmit)="add()">
+    <h2>Добавление моряка</h2>
   <div class="form-group">
     <label [ngClass]="{'text-danger':(submitted && f.Name.errors )}">Имя</label>
     <input class="form-control" formControlName="Name" type="text" >

@@ -40,7 +40,7 @@
                 <small  class="form-text text-danger" *ngIf="csubmitted && !c.Position">Укажите должность члена экипажа</small>
             </div>
         </div>
-        <div class="new-bank">
+        <div *ngIf="sailorsValues.length>sailorsIds.length" class="new-bank">
             <i class="fas fa-plus" aria-hidden="true"  (click)="addSailor()"></i>
         </div>
     </div>

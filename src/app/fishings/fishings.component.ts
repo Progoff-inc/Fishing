@@ -12,12 +12,16 @@ import { UserService } from '../services/user.service';
 export class FishingsComponent implements OnInit {
   filters:any;
   fishings:any;
+  sailors:any;
   constructor(public fs:FishingService, public ms:ModalService, public us:UserService) { }
 
   ngOnInit() {
     let d = new Date();
     this.filters = {DateStart:new Date(d.getFullYear(), d.getMonth(), 1).toISOString().substring(0,10), DateFinish:new Date(d.getFullYear(), d.getMonth()+1, 1).toISOString().substring(0,10)}
     this.getFishings();
+    this.fs.getSailors().subscribe(data => {
+      this.sailors = data;
+    })
   }
 
   getFishings(){

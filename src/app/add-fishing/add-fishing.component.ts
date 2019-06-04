@@ -42,7 +42,7 @@ export class AddFishingComponent implements OnInit {
 
   add(){
     this.submitted=true;
-    if(this.fishingForm.invalid){
+    if(this.fishingForm.invalid || !(!!this.sailors[0] &&  !!this.sailors[0].SailorId)){
       
       return;
     }

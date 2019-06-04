@@ -9,7 +9,7 @@ import { LoadService } from './load.service';
 @Injectable()
 export class UserService{
     public user;
-    baseUrl:string='http://client.nomokoiw.beget.tech/fishing/';
+    baseUrl:string='http://localhost/fishing/';
 
     constructor(private router:Router, private http: HttpClient, private ls:LoadService){
         // sessionStorage.removeItem('userFishing');
